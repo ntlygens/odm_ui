@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1024532317222",
+    "project_id": "ondamenu-pos",
+    "storage_bucket": "ondamenu-pos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024532317222:android:c8cd7594f341f563e412e7",
+        "android_client_info": {
+          "package_name": "com.example.odm_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024532317222-qc3h0kt0qfu77jct3o0vtb9itgbcce5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQWjeIjGY_9B1m6JhT7Tkt2AtvRtiW8mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024532317222-qc3h0kt0qfu77jct3o0vtb9itgbcce5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
