@@ -64,18 +64,6 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => const RegisterPage()
                         ),
                       );
-
-                      /*MaterialPageRoute materialPageRoute = MaterialPageRoute (
-                        builder: (context) => const RegisterPage()
-                      );
-                      Navigator.of(context).push(materialPageRoute);*/ // error on of(context)
-                      // Navigator.of(context).pushNamed("./RegisterPage"); // error on of(context)
-                      // open = false;
-
-                      /*WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RegisterPage()));
-                      });*/
-                      
                       // print ("clicked the create act btn");
                     },
                     outlineBtn: true,

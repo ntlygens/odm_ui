@@ -58,13 +58,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: CustomBtn(
                     dText: "Back To Login",
                     onPressed: () {
-                      /*MaterialPageRoute materialPageRoute = MaterialPageRoute (
-                          builder: (context) => LoginPage()
-                      );*/
-                      // Navigator.of(context).push(materialPageRoute); // error on of(context)
-                      /*WidgetsBinding.instance!.addPostFrameCallback((_) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
-                      });*/
                       Navigator.of(context).pop();
                       // print("clicked the create acct btn");
                     },
