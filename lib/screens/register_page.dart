@@ -58,7 +58,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: CustomBtn(
                     dText: "Back To Login",
                     onPressed: () {
-                      Navigator.of(context).pop();
+                     /* WidgetsBinding.instance!.addPostFrameCallback((_) {
+                        Navigator.of(context).pop();
+                      });*/
                       // print("clicked the create acct btn");
                     },
                     outlineBtn: true,

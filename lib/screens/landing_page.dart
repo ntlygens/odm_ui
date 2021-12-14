@@ -36,7 +36,7 @@ class LandingPage extends StatelessWidget {
 
                 if (streamSnapshot.connectionState == ConnectionState.active) {
                   // get the user
-                  User? _user = streamSnapshot.data as User?;
+                  Object? _user = streamSnapshot.data;
 
                   // if user not logged in
                   if(_user == null) {
@@ -57,18 +57,6 @@ class LandingPage extends StatelessWidget {
                 );
               },
             );
-
-            // return HomePage();
-            /*return Scaffold(
-              body: Container(
-                child: const Center(
-                  child: Text(
-                    "Firebase App Initialized!",
-                    style: Constants.regHeading,
-                  ),
-                ),
-              ),
-            );*/
           }
 
           return const Scaffold(

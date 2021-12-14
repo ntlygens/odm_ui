@@ -16,61 +16,61 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: SizedBox(
-            width: double.infinity,
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 24,
-                  ),
-                  child: const Text(
-                    "Welcome User \nLogin to your account",
-                    textAlign: TextAlign.center,
-                    style: Constants.boldHeading,
-                  ),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  top: 24,
                 ),
-                Column(
-                  children: [
-                    const CustomInput(
-                      hintText: "youremail@example.com",
-                    ),
-                    const CustomInput(
-                      hintText: "yourpassword",
-                    ),
-                    CustomBtn(
-                      dText: "Login",
-                      onPressed: () {
-                        print("clicked the Login Btn");
-                      },
-                      outlineBtn: false,
-                    ),
-                  ],
+                child: const Text(
+                  "Welcome User \nLogin to your account",
+                  textAlign: TextAlign.center,
+                  style: Constants.boldHeading,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    // top: 6,
-                    bottom: 16,
+              ),
+              Column(
+                children: [
+                  const CustomInput(
+                    hintText: "youremail@example.com",
                   ),
-                  child: CustomBtn(
-                    dText: "Create New Account",
+                  const CustomInput(
+                    hintText: "yourpassword",
+                  ),
+                  CustomBtn(
+                    dText: "Login",
                     onPressed: () {
+                      print("clicked the Login Btn");
+                    },
+                    outlineBtn: false,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  // top: 6,
+                  bottom: 16,
+                ),
+                child: CustomBtn(
+                  dText: "Create New Account",
+                  onPressed: () {
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const RegisterPage()
                         ),
                       );
-                      // print ("clicked the create act btn");
-                    },
-                    outlineBtn: true,
-                  ),
+                    });
+                    // print ("clicked the create act btn");
+                  },
+                  outlineBtn: true,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
