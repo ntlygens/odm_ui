@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 
 class CustomBtn extends StatelessWidget {
-  const CustomBtn({Key? key, required this.dText, required this.onPressed, required this.outlineBtn}) : super(key: key);
+  const CustomBtn({this.dText, this.onPressed, this.outlineBtn});
 
   final String dText;
   final Function onPressed;
@@ -13,7 +13,7 @@ class CustomBtn extends StatelessWidget {
     bool _outlineBtn = outlineBtn;
 
     return GestureDetector(
-      onTap: onPressed(),
+      onTap: onPressed,
       child: Container(
         height: 65,
         alignment: Alignment.center,

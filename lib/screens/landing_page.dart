@@ -7,7 +7,7 @@ import 'package:odm_ui/screens/login_page.dart';
 
 class LandingPage extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  LandingPage({Key? key}) : super(key: key);
+  // LandingPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,26 +17,29 @@ class LandingPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Scaffold(
               body: Center(
-                child: Text("Error: $snapshot.error"),
+                child: Text("Error: ${snapshot.error}"),
               ),
             );
           }
 
+          // Connected ~ App is running on Firebase
           if (snapshot.connectionState == ConnectionState.done) {
+
+            // Streambuilder check of live login
             return StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, streamSnapshot) {
                 if (streamSnapshot.hasError) {
                   return Scaffold(
                     body: Center(
-                      child: Text("Error: $streamSnapshot.error"),
+                      child: Text("Error: ${streamSnapshot.error}"),
                     ),
                   );
                 }
 
                 if (streamSnapshot.connectionState == ConnectionState.active) {
                   // get the user
-                  Object? _user = streamSnapshot.data;
+                  User _user = streamSnapshot.data;
 
                   // if user not logged in
                   if(_user == null) {

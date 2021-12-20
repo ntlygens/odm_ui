@@ -5,7 +5,7 @@ import 'package:odm_ui/widgets/custom_btn.dart';
 import 'package:odm_ui/widgets/custom_input.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  // const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -16,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resolves the renderflex overflow issue
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -34,10 +36,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Column(
                 children: [
-                  const CustomInput(
+                  CustomInput(
                     hintText: "youremail@example.com",
                   ),
-                  const CustomInput(
+                  CustomInput(
                     hintText: "yourpassword",
                   ),
                   CustomBtn(
@@ -57,15 +59,15 @@ class _LoginPageState extends State<LoginPage> {
                 child: CustomBtn(
                   dText: "Create New Account",
                   onPressed: () {
-                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                    // WidgetsBinding.instance!.addPostFrameCallback((_) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const RegisterPage()
+                            builder: (context) => RegisterPage()
                         ),
                       );
-                    });
-                    // print ("clicked the create act btn");
+                    // });
+                    print ("clicked the create act btn");
                   },
                   outlineBtn: true,
                 ),

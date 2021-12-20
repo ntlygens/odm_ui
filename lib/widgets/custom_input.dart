@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 
 class CustomInput extends StatelessWidget {
-  const CustomInput({Key? key, required this.hintText}) : super(key: key);
-
   final String hintText;
+  CustomInput({this.hintText});
 
   @override
   Widget build(BuildContext context) {
