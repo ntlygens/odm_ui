@@ -13,6 +13,30 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // bool open = false;
+  Future<void> _alertDialogBuilder() async {
+    return showDialog(
+        context: context,
+        // only dismissable by clicking button
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Error"),
+            content: Container (
+              child: Text("Random text placeholder"),
+            ),
+            actions: [
+              FlatButton(
+                child: Text("Close Dialog"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                   CustomBtn(
                     dText: "Login",
                     onPressed: () {
+                      _alertDialogBuilder();
                       print("clicked the Login Btn");
                     },
                     outlineBtn: false,

@@ -12,30 +12,9 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // bool open = false;
+
   // alert box for error display
-  Future<void> _alertDialogBuilder() async {
-    return showDialog(
-        context: context,
-        // only dismissable by clicking button
-        barrierDismissible: false,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Container (
-              child: Text("Random text placeholder"),
-            ),
-            actions: [
-              FlatButton(
-                  child: Text("Close Dialog"),
-                  onPressed: () {
-                      Navigator.pop(context);
-                  },
-              )
-            ],
-          );
-        }
-    );
-  }
+  bool _registerFormLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +47,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   CustomBtn(
                     dText: "Create Account",
                     onPressed: () {
-                      _alertDialogBuilder();
+                      // _alertDialogBuilder();
+                      setState(() {
+                        _registerFormLoading = true;
+                      });
                       print("clicked the Register Btn");
 
                     },
+                    isLoading: _registerFormLoading,
+
                     outlineBtn: false,
                   ),
                 ],
