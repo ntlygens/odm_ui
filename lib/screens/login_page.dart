@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/screens/register_page.dart';
@@ -13,7 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // bool open = false;
-  Future<void> _alertDialogBuilder() async {
+  Future<void> _alertDialogBuilder(String error) async {
     return showDialog(
         context: context,
         // only dismissable by clicking button
@@ -22,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
           return AlertDialog(
             title: Text("Error"),
             content: Container (
-              child: Text("Random text placeholder"),
+              child: Text(error),
             ),
             actions: [
               FlatButton(
@@ -35,6 +36,68 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
     );
+  }
+
+  // create new user account
+  Future<String> _loginAccount() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _loginEmail,
+          password: _loginPassword);
+      return null;
+    } on FirebaseAuthException catch(e) {
+      if (e.code == 'weak-password') {
+        return 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        return 'The account already exists for that email.';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  // login user
+  void _submitForm() async {
+    // set the form to loading state
+    setState(() {
+      _loginFormLoading = true;
+    });
+
+    // run the create account method
+    String _loginFeedback = await _loginAccount();
+
+    // if string is not null error pops up
+    if (_loginFeedback != null) {
+      _alertDialogBuilder(_loginFeedback);
+
+      // set the form to regular state: not loading
+      setState(() {
+        _loginFormLoading = false;
+      });
+    }
+  }
+
+  // default loading state
+  bool _loginFormLoading = false;
+
+  // core input field values
+  String _loginEmail = "";
+  String _loginPassword = "";
+
+  // focus node for input
+  FocusNode _passwordFocusNode;
+
+  @override
+  void initState() {
+    _passwordFocusNode = FocusNode();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -61,17 +124,39 @@ class _LoginPageState extends State<LoginPage> {
               Column(
                 children: [
                   CustomInput(
-                    hintText: "youremail@example.com",
+                    hintText: "Email@example.com",
+                    onChanged: (value) {
+                      _loginEmail = value;
+                    },
+                    onSubmitted: (value) {
+                      _passwordFocusNode.requestFocus();
+                    },
+                    textInputAction: TextInputAction.next,
                   ),
                   CustomInput(
-                    hintText: "yourpassword",
+                    hintText: "Password",
+                    onChanged: (value) {
+                      _loginPassword = value;
+                    },
+                    focusNode: _passwordFocusNode,
+                    isPasswordField: true,
+                    onSubmitted: (value) {
+                      _submitForm();
+                    },
                   ),
                   CustomBtn(
                     dText: "Login",
                     onPressed: () {
-                      _alertDialogBuilder();
+                      // _alertDialogBuilder();
+                      _submitForm();
+                      /*setState(() {
+                        _registerFormLoading = true;
+                      });*/
                       print("clicked the Login Btn");
+
                     },
+                    isLoading: _loginFormLoading,
+
                     outlineBtn: false,
                   ),
                 ],
