@@ -112,10 +112,10 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   top: 24,
                 ),
-                child: const Text(
+                child: Text(
                   "Create a New Account",
                   textAlign: TextAlign.center,
                   style: Constants.boldHeading,
@@ -162,7 +162,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(
+                padding:  EdgeInsets.only(
                   bottom: 16,
                 ),
                 child: CustomBtn(
