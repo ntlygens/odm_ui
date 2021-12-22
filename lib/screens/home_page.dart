@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/tabs/home_tab.dart';
-import 'package:odm_ui/tabs/products_tab.dart';
 import 'package:odm_ui/tabs/profile_tab.dart';
 import 'package:odm_ui/tabs/search_tab.dart';
 import 'package:odm_ui/tabs/shoppingcart_tab.dart';
@@ -49,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 children: [
                   HomeTab(),
-                  ProductsTab(),
+                  ProfileTab(),
                   SearchTab(),
                   ShoppingCartTab(),
                 ],
