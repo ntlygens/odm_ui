@@ -40,15 +40,15 @@ class HomeTab extends StatelessWidget {
                       // width: double.infinity,
                       // alignment: Alignment.topCenter,
                       margin: EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 12,
+                        vertical: 2,
+                        horizontal: 14,
                       ),
                       child: Stack(
                         children: [
                           Container(
-                            padding: EdgeInsets.only(
-                              bottom: 24
-                            ),
+                            // padding: EdgeInsets.only(
+                            //   bottom: 24
+                            // ),
                             // height: 210,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
@@ -59,9 +59,9 @@ class HomeTab extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            bottom: 0,
-                            left: 10,
-                            right: 10,
+                            bottom: 16,
+                            left: 20,
+                            right: 20,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
