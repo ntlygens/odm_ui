@@ -10,7 +10,9 @@ class ShoppingCartTab extends StatelessWidget {
       child: Stack(
         children: [
           Center(
-            child: Text("Cart Tab"),
+            child: Text(
+              "Cart Tab"
+            ),
           ),
           ActionBar(
             title: "Shopping Cart",
