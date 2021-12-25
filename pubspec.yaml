@@ -37,9 +37,9 @@ dependencies:
   # base git: cloud_firestore: "^0.14.0+2"
 
   # google fonts
-  # original: google_fonts: ^2.1.0
-  # base git:
-  google_fonts: ^1.1.0
+  # original:
+  google_fonts: ^1.1.2
+  # base git: google_fonts: ^1.1.0
 
   # cloud firestore_ui:
   # base git: cloud_firestore: "^0.14.0+2"

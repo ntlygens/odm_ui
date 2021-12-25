@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
 class HomeTab extends StatelessWidget {
@@ -65,8 +66,21 @@ class HomeTab extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Product Name"),
-                                Text("Price"),
+                                Text(
+                                  document.data()['name'] ?? "Product Name",
+                                  style: Constants.regHeading,
+                                ),
+                                Text(
+                                  // for price use statement below for added
+                                  // dollar sign to register.
+                                  // "\$${document.data()['price']}"
+                                  document.data()['type'][0] ?? "Price",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Theme.of(context).accentColor,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
                               ],
                             ),
                           )
