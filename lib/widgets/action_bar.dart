@@ -5,24 +5,26 @@ class ActionBar extends StatelessWidget {
   final String title;
   final bool hasBackArrow;
   final bool hasTitle;
+  final bool hasBackground;
 
-  ActionBar({ this.title, this.hasBackArrow, this.hasTitle });
+  ActionBar({ this.title, this.hasBackArrow, this.hasTitle, this.hasBackground });
 
   @override
   Widget build(BuildContext context) {
     bool _hasBackArrow = hasBackArrow ?? false;
     bool _hasTitle = hasTitle ?? true;
+    bool _hasBackground = hasBackground ?? true;
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: _hasBackground ? LinearGradient(
           colors: [
             Colors.white,
             Colors.white.withOpacity(0),
           ],
           begin: Alignment(0, 0),
           end: Alignment(0, 1)
-        )
+        ) : null
       ),
       padding: EdgeInsets.only(
         top: 56,
