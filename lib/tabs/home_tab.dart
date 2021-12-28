@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odm_ui/constants.dart';
-import 'package:odm_ui/screens/product_page.dart';
+import 'package:odm_ui/screens/merchant_service_page.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
 class HomeTab extends StatelessWidget {
-  final CollectionReference _productsRef =
-    FirebaseFirestore.instance.collection("Products");
+  final CollectionReference _servicesRef =
+    FirebaseFirestore.instance.collection("Services");
   // HomeTab({});
 
   @override
@@ -18,7 +18,7 @@ class HomeTab extends StatelessWidget {
             child: Text("Home Tab"),
           ),
           FutureBuilder<QuerySnapshot>(
-            future: _productsRef.get(),
+            future: _servicesRef.get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
@@ -41,7 +41,7 @@ class HomeTab extends StatelessWidget {
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
-                                ProductPage(
+                                MerchantServicePage(
                                     productID: document.id
                                 )
                         ));

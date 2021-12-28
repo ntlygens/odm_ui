@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
+import 'package:odm_ui/widgets/category_types.dart';
 import 'package:odm_ui/widgets/image_swipe.dart';
 
 import '../constants.dart';
@@ -38,8 +39,10 @@ class _ProductPageState extends State<ProductPage> {
                 // Firebase doc data map
                 Map<String, dynamic> documentData = snapshot.data.data();
 
-                // List of imges
+                // List of images
                 List imageList = documentData['images'];
+                // List of types
+                List categoryType = documentData['type'];
 
                 return ListView(
                   padding: EdgeInsets.all(0),
@@ -77,7 +80,10 @@ class _ProductPageState extends State<ProductPage> {
                           "Select Type",
                         style: Constants.regHeading,
                       ),
-                    )
+                    ),
+                    CategoryTypes(
+                      categoryTypeList: categoryType,
+                    ),
                   ],
                 );
               }
