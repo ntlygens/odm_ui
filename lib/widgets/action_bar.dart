@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 
@@ -14,6 +16,14 @@ class ActionBar extends StatelessWidget {
     bool _hasBackArrow = hasBackArrow ?? false;
     bool _hasTitle = hasTitle ?? true;
     bool _hasBackground = hasBackground ?? true;
+
+    final CollectionReference _usersRef =
+      FirebaseFirestore
+          .instance
+          .collection("Users");
+
+    User _user = FirebaseAuth.instance.currentUser;
+
 
     return Container(
       decoration: BoxDecoration(
@@ -36,18 +46,23 @@ class ActionBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (_hasBackArrow)
-            Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(8)
-                ),
-                child: Image(
-                  image: AssetImage(
-                      "assets/images/back_arrow.png"
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8)
                   ),
-                ),
+                  child: Image(
+                    image: AssetImage(
+                        "assets/images/back_arrow.png"
+                    ),
+                  ),
+              ),
             ),
           if (_hasTitle)
             Text(
@@ -63,15 +78,26 @@ class ActionBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8)
             ),
             alignment: Alignment.center,
-            child: Text(
-              "0",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+            child: StreamBuilder(
+              stream: _usersRef.doc(_user.uid).collection("Cart").snapshots(),
+              builder: (context, snapshot) {
+                int _totalItems = 0;
 
+                if( snapshot.connectionState == ConnectionState.active ) {
+                  List _documents = snapshot.data.docs;
+                  _totalItems = _documents.length;
+                }
 
+                return Text(
+                  "$_totalItems" ?? "0",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+
+                );
+              }
             ),
           )
 

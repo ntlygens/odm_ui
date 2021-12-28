@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CategoryTypes extends StatefulWidget {
   final List categoryTypeList;
-  CategoryTypes({this.categoryTypeList});
+  final Function(String) onSelected;
+  CategoryTypes({this.categoryTypeList, this.onSelected});
 
   @override
   _CategoryTypesState createState() => _CategoryTypesState();
@@ -29,6 +30,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
           itemBuilder: (BuildContext ctx, index) {
             return GestureDetector(
               onTap: () {
+                widget.onSelected("${widget.categoryTypeList[index]}");
                 setState(() {
                   _isSelected = index;
                 });

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
@@ -18,6 +19,24 @@ class MerchantServicePage extends StatefulWidget {
 class _MerchantServicePageState extends State<MerchantServicePage> {
   final CollectionReference _servicesRef =
     FirebaseFirestore.instance.collection("Services");
+
+  final CollectionReference _usersRef =
+    FirebaseFirestore.instance.collection("Users");
+  // User -> userID -> Cart ->
+
+  User _user = FirebaseAuth.instance.currentUser;
+
+  String _selectedCategoryType = "0";
+
+  Future _addToCart() {
+    return _usersRef
+        .doc(_user.uid)
+        .collection("Cart")
+        .doc(widget.productID)
+        .set({ "type": _selectedCategoryType });
+  }
+ 
+  final _snackBar = SnackBar(content: Text("Product added to Cart"));
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +113,9 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                       ),
                       child: CategoryTypes(
                         categoryTypeList: serviceType,
+                        onSelected: (type) {
+                          _selectedCategoryType = type;
+                        },
                       ),
                     ),
                     Padding(
@@ -113,29 +135,36 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                                 "assets/images/bookmark_icon.png",
                               ),
                               fit: BoxFit.contain,
-                              height: 26,
+                              height: 22,
                               // width: 42
 
                             ),
 
                           ),
                           Expanded(
-                            child: Container(
-                              height: 65,
-                              margin: EdgeInsets.only(
-                                left: 16
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Select Category",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
+                            child: GestureDetector(
+                              onTap: () async {
+                                await _addToCart();
+                                Scaffold.of(context).showSnackBar(_snackBar);
+                                print("Product Added");
+                              },
+                              child: Container(
+                                height: 65,
+                                margin: EdgeInsets.only(
+                                  left: 16
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Select Category",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ),
                                 ),
                               ),
                             ),
