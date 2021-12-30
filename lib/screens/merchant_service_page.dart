@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 import 'package:odm_ui/widgets/category_types.dart';
 import 'package:odm_ui/widgets/image_swipe.dart';
@@ -9,30 +10,25 @@ import 'package:odm_ui/widgets/image_swipe.dart';
 import '../constants.dart';
 
 class MerchantServicePage extends StatefulWidget {
-  final String productID;
-  MerchantServicePage({this.productID});
+  final String serviceID;
+  MerchantServicePage({this.serviceID});
 
   @override
   _MerchantServicePageState createState() => _MerchantServicePageState();
 }
 
 class _MerchantServicePageState extends State<MerchantServicePage> {
-  final CollectionReference _servicesRef =
-    FirebaseFirestore.instance.collection("Services");
+  FirebaseServices _firebaseServices = FirebaseServices();
 
-  final CollectionReference _usersRef =
-    FirebaseFirestore.instance.collection("Users");
   // User -> userID -> Cart ->
-
-  User _user = FirebaseAuth.instance.currentUser;
 
   String _selectedCategoryType = "0";
 
   Future _addToCart() {
-    return _usersRef
-        .doc(_user.uid)
+    return _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserID())
         .collection("Cart")
-        .doc(widget.productID)
+        .doc(widget.serviceID)
         .set({ "type": _selectedCategoryType });
   }
  
@@ -44,7 +40,7 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
       body: Stack(
         children: [
           FutureBuilder(
-            future: _servicesRef.doc(widget.productID).get(),
+            future: _firebaseServices.servicesRef.doc(widget.serviceID).get(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
@@ -62,6 +58,9 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                 List serviceImageList = documentData['images'];
                 // List of types
                 List serviceType = documentData['type'];
+                // set default value
+                _selectedCategoryType = serviceType[0];
+
 
                 return ListView(
                   padding: EdgeInsets.all(0),
@@ -146,7 +145,7 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                               onTap: () async {
                                 await _addToCart();
                                 Scaffold.of(context).showSnackBar(_snackBar);
-                                print("Product Added");
+                                // print("Product Added");
                               },
                               child: Container(
                                 height: 65,

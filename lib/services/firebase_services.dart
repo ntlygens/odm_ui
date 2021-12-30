@@ -1,0 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class FirebaseServices {
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
+  String getUserID() {
+    return _firebaseAuth.currentUser.uid;
+  }
+
+  final CollectionReference servicesRef =
+  FirebaseFirestore.instance.collection("Services");
+
+  final CollectionReference usersRef =
+  FirebaseFirestore.instance.collection("Users");
+
+}

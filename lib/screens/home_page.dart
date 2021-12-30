@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
+import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/tabs/home_tab.dart';
 import 'package:odm_ui/tabs/profile_tab.dart';
 import 'package:odm_ui/tabs/search_tab.dart';
@@ -15,11 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  FirebaseServices _firebaseServices = FirebaseServices();
+
   PageController _tabsPageController;
   int _selectedTab = 0;
 
   @override
   void initState() {
+    // print("userID: ${_firebaseServices.getUserID()}");
     _tabsPageController = PageController();
     super.initState();
   }

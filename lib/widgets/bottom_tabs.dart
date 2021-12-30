@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabs extends StatefulWidget {
@@ -59,7 +60,7 @@ class _BottomTabsState extends State<BottomTabs> {
             imagePath: "assets/images/baseline_shopping_cart_black_24dp@2x.png",
             selected: _selectedTab == 3 ? true : false,
             onPressed: () {
-              widget.tabClicked(3);
+              FirebaseAuth.instance.signOut();
             },
           ),
 
