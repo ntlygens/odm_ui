@@ -9,10 +9,14 @@ class FirebaseServices {
     return _firebaseAuth.currentUser.uid;
   }
 
+
+  final CollectionReference productsRef =
+      FirebaseFirestore.instance.collection("Products");
+
   final CollectionReference servicesRef =
-  FirebaseFirestore.instance.collection("Services");
+      FirebaseFirestore.instance.collection("Services");
 
   final CollectionReference usersRef =
-  FirebaseFirestore.instance.collection("Users");
+      FirebaseFirestore.instance.collection("Users");
 
 }

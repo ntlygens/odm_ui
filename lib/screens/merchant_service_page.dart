@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odm_ui/screens/service_products_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 import 'package:odm_ui/widgets/category_types.dart';
@@ -36,6 +37,8 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool _alreadySelected = true;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -48,10 +51,11 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                     child: Text("Error: ${snapshot.error}"),
                   ),
                 );
-              }
+            }
 
               if (snapshot.connectionState == ConnectionState.done) {
                 // Firebase doc data map
+                // ** // Map<String, dynamic> documentData = snapshot.data.data();
                 Map<String, dynamic> documentData = snapshot.data.data();
 
                 // List of images
@@ -112,9 +116,9 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                       ),
                       child: CategoryTypes(
                         categoryTypeList: serviceType,
-                        onSelected: (type) {
-                          _selectedCategoryType = type;
-                        },
+                        serviceCategoryName: snapshot.data['name'],
+                        serviceCategoryID: snapshot.data.id,
+
                       ),
                     ),
                     Padding(
@@ -143,8 +147,16 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                           Expanded(
                             child: GestureDetector(
                               onTap: () async {
-                                await _addToCart();
-                                Scaffold.of(context).showSnackBar(_snackBar);
+                                // await _addToCart();
+                                if(_alreadySelected == false) {
+                                  Scaffold.of(context).showSnackBar(_snackBar);
+                                }
+
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) =>
+                                      ServiceProductsPage(),
+                                    )
+                                );
                                 // print("Product Added");
                               },
                               child: Container(
@@ -158,7 +170,7 @@ class _MerchantServicePageState extends State<MerchantServicePage> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Select Category",
+                                  "View Selected",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
