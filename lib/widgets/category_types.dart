@@ -32,6 +32,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
           "srvc": _selectedProductID,
           "srvcCtgry": _selectedSrvcCtgryName,
           "srvcCtgryID": _selectedSrvcCtgryID,
+          "date": _firebaseServices.setDayAndTime(),
         });
   }
 
@@ -76,6 +77,9 @@ class _CategoryTypesState extends State<CategoryTypes> {
                       setState(() {
                         // _isSelected = index;
                       });
+
+                      // print("datentime: ${_firebaseServices.setDayAndTime()}");
+
                       await _selectedServiceProduct();
 
                       Navigator.push(context, MaterialPageRoute(

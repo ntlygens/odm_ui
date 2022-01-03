@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
@@ -27,7 +28,7 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
             // get all selected documents from SelectedService
             future: _firebaseServices.usersRef.doc(
                 _firebaseServices.getUserID()
-            ).collection("SelectedService").get(),
+            ).collection("SelectedService").orderBy("date", descending: true).get(),
             builder: (context, snapshot) {
               if( snapshot.hasError) {
                 return Scaffold(
@@ -39,6 +40,7 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
 
               if(snapshot.connectionState == ConnectionState.done) {
                 List _documents = snapshot.data.docs;
+                
                 // Collect Selected docs into array / ListView
                 // display data in listview
                 return ListView(
@@ -48,14 +50,14 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                   ),
                   children:  [
                     for(var i = 0; i < _documents.length; i++)
-                    // seperate array into individual documents
-                    ProductViewer(
-                      isSelected: false,
-                      prodID: _documents[i]['srvc'],
-                      prodName: _documents[i]['name'],
-                      prodSrvcID: _documents[i]['srvcCtgryID'],
-                      prodSrvcName: _documents[i]['srvcCtgry'],
-                    )
+                      // seperate array into individual documents
+                      ProductViewer(
+                        isSelected: i == 0,
+                        prodID: _documents[i]['srvc'],
+                        prodName: _documents[i]['name'],
+                        prodSrvcID: _documents[i]['srvcCtgryID'],
+                        prodSrvcName: _documents[i]['srvcCtgry'],
+                      )
                   ]
                 );
               }

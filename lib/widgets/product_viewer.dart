@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/merchant_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
+import 'package:odm_ui/widgets/custom_btn.dart';
 
 class ProductViewer extends StatefulWidget {
   final String prodID;
@@ -29,7 +30,7 @@ class _ProductViewerState extends State<ProductViewer> {
             borderRadius: BorderRadius.circular(12),
           ),
           // height: _isSelected ? 300 : 55,
-          height: _isSelected ? 300 : 55,
+          height: _isSelected ? 350 : 65,
           // width: double.infinity,
           alignment: Alignment.center,
           margin: EdgeInsets.symmetric(
@@ -39,50 +40,54 @@ class _ProductViewerState extends State<ProductViewer> {
           child: Text(
             "${widget.prodName}",
             style: TextStyle(
-                color: _isSelected ? Colors.white : Colors.black54,
-                fontSize: 16,
+                color: _isSelected ? Colors.black : Colors.black54,
+                fontSize: 18,
                 fontWeight: FontWeight.w600
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(
-            top: 0,
-            right: 12,
-            bottom: 36,
-            left: 12
-          ),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (context) =>
-                      MerchantServicePage(
-                        serviceID: "${widget.prodSrvcID}",
-                      )
-              ));
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context) =>
+                    MerchantServicePage(
+                      serviceID: "${widget.prodSrvcID}",
+                    )
+            ));
 
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: _isSelected ? Colors.amberAccent : Colors.grey,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              height: 45,
-              // width: double.infinity,
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(
-                vertical: 12,
-                horizontal: 48,
-              ),
-              child: Text(
-                "${widget.prodSrvcName}",
-                style: TextStyle(
-                    color: _isSelected ? Colors.white : Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
-                ),
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: _isSelected ? Colors.amberAccent : Colors.grey,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            height: _isSelected ? 55 : 45,
+            // width: double.infinity,
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(
+              vertical: _isSelected ? 6 : 0,
+              horizontal: _isSelected ? 24 : 48,
+            ),
+            child: Text(
+              "${widget.prodSrvcName}",
+              style: TextStyle(
+                  color: _isSelected ? Colors.white : Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600
               ),
             ),
+          ),
+        ),
+        Container(
+          height: _isSelected ? 65 : 50,
+          margin: EdgeInsets.only(
+            right: _isSelected ? 12 : 24,
+            bottom: _isSelected ? 80 : 24,
+            left: _isSelected ? 12 : 24,
+          ),
+          child: CustomBtn(
+            dText: "Remove",
+            outlineBtn: false,
           ),
         )
       ],
