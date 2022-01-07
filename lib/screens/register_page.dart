@@ -38,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   // create new user account
-  Future<String> _createAccount() async {
+  Future<String?> _createAccount() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _registeredEmail,
@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     // run the create account method
-    String _createAccountFeedback = await _createAccount();
+    String? _createAccountFeedback = await _createAccount();
 
     // if string is not null error pops up
     if (_createAccountFeedback != null) {
@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String _registeredPassowrd = "";
 
   // focus node for input
-  FocusNode _passwordFocusNode;
+  late FocusNode _passwordFocusNode;
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          child: Column(
+          child:  Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
@@ -169,10 +169,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   dText: "Back To Login",
                   onPressed: () {
                     Navigator.pop(context);
-                   /* WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      Navigator.of(context).pop();
-                    });*/
-                    // print("clicked the create acct btn");
                   },
                   outlineBtn: true,
                 ),

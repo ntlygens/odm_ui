@@ -6,10 +6,10 @@ import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/product_viewer.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
-import 'merchant_service_page.dart';
+import 'selected_service_page.dart';
 
 class ServiceProductsPage extends StatefulWidget {
-  final Function onPressed;
+  final Function? onPressed;
   ServiceProductsPage({this.onPressed});
 
   @override
@@ -29,7 +29,7 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
             future: _firebaseServices.usersRef.doc(
                 _firebaseServices.getUserID()
             ).collection("SelectedService").orderBy("date", descending: true).get(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot snapshot) {
               if( snapshot.hasError) {
                 return Scaffold(
                   body: Center(

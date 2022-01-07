@@ -3,10 +3,9 @@ import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
 import '../constants.dart';
-import 'merchant_service_page.dart';
+import 'selected_service_page.dart';
 
 class CartPage extends StatefulWidget {
-  // const CartPage({Key? key}) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -24,7 +23,7 @@ class _CartPageState extends State<CartPage> {
             future: _firebaseServices.usersRef.doc(
               _firebaseServices.getUserID()
             ).collection("Cart").get(),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
                   body: Center(
@@ -35,56 +34,59 @@ class _CartPageState extends State<CartPage> {
 
               // collection data to display
               if(snapshot.connectionState == ConnectionState.done) {
-                List _documents = snapshot.data.docs;
-                // display data in listview
-                return ListView (
-                  // shrinkWrap: true,
-                  padding: EdgeInsets.only(
-                    top: 120,
-                    bottom: 24,
-                  ),
-                  children: _documents.map((document) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
+                if(snapshot.hasData) {
+                  // display data in listview
+                  return ListView(
+                    // shrinkWrap: true,
+                    padding: EdgeInsets.only(
+                      top: 120,
+                      bottom: 24,
+                    ),
+                    children: snapshot.data!.docs.map((document) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
-                                MerchantServicePage(
-                                    serviceID: document.id,
+                                SelectedServicePage(
+                                  serviceID: document.id,
                                 ),
-                        ));
-                      },
-                      child: FutureBuilder (
-                        future: _firebaseServices.servicesRef.doc(document.id).get(),
-                        builder: (context, serviceSnap){
-                          if(serviceSnap.hasError){
-                            return Container(
-                              child: Center(
-                                child: Text(
-                                  "${serviceSnap.error}"
+                          ));
+                        },
+                        child: FutureBuilder(
+                          future: _firebaseServices.servicesRef.doc(document.id)
+                              .get(),
+                          builder: (context, AsyncSnapshot serviceSnap) {
+                            if (serviceSnap.hasError) {
+                              return Container(
+                                child: Center(
+                                  child: Text(
+                                      "${serviceSnap.error}"
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
+                              );
+                            }
 
-                          if(serviceSnap.connectionState == ConnectionState.done) {
-                            Map _serviceMap = serviceSnap.data.data();
+                            if (serviceSnap.connectionState ==
+                                ConnectionState.done) {
+                              if(serviceSnap.hasData) {
+                                Map _serviceMap = serviceSnap.data!.data();
 
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              // height: 225,
-                              // width: double.infinity,
-                              // alignment: Alignment.topCenter,
-                              margin: EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 14,
-                              ),
-                              child: Container (
-                                child: Text("${_serviceMap['name']}"),
-                              ),
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  // height: 225,
+                                  // width: double.infinity,
+                                  // alignment: Alignment.topCenter,
+                                  margin: EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 14,
+                                  ),
+                                  child: Container(
+                                    child: Text("${_serviceMap['name']}"),
+                                  ),
 
-                              /*Stack(
+                                  /*Stack(
                               children: [
                                 Container(
                                   // padding: EdgeInsets.only(
@@ -126,21 +128,23 @@ class _CartPageState extends State<CartPage> {
                                 )
                               ],
                             ),*/
+                                );
+                              }
+                            }
+
+                            return Container(
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
                             );
-                          }
-
-                          return Container(
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        },
-                      ),
+                          },
+                        ),
 
 
-                    );
-                  }).toList(),
-                );
+                      );
+                    }).toList(),
+                  );
+                }
               }
 
               return Scaffold(

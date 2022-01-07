@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class FirebaseServices {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  String _firebaseTimeStamp;
+  late String _firebaseTimeStamp;
 
   String getUserID() {
-    return _firebaseAuth.currentUser.uid;
+    return _firebaseAuth.currentUser!.uid;
   }
 
   String setDayAndTime() {

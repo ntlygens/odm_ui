@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/service_products_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
@@ -6,8 +7,8 @@ class CategoryTypes extends StatefulWidget {
   final List categoryTypeList;
   final String serviceCategoryName;
   final String serviceCategoryID;
-  final Function(String) onSelected;
-  CategoryTypes({this.categoryTypeList, this.onSelected, this.serviceCategoryName, this.serviceCategoryID});
+  final Function(String)? onSelected;
+  CategoryTypes({ required this.categoryTypeList, this.onSelected, required this.serviceCategoryName, required this.serviceCategoryID});
 
   @override
   _CategoryTypesState createState() => _CategoryTypesState();
@@ -15,7 +16,7 @@ class CategoryTypes extends StatefulWidget {
 
 class _CategoryTypesState extends State<CategoryTypes> {
   int _isSelected = 0;
-  String _selectedProductName = "selected-product-name";
+  String? _selectedProductName = "selected-product-name";
   String _selectedProductID = "selected-produc-idt";
   String _selectedSrvcCtgryName = "selected-service-name";
   String _selectedSrvcCtgryID = "selected-service-id";
@@ -38,6 +39,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
 
   @override
   Widget build(BuildContext context) {
+    // print("amt: ${widget.categoryTypeList.length}");
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 8,
@@ -53,8 +55,10 @@ class _CategoryTypesState extends State<CategoryTypes> {
           itemCount: widget.categoryTypeList.length,
           itemBuilder: (BuildContext ctx, index) {
             return FutureBuilder(
-              future: _firebaseServices.productsRef.doc(widget.categoryTypeList[index]).get(),
-              builder: (context, productSnap) {
+              future: _firebaseServices.productsRef
+                  .doc("${widget.categoryTypeList[index]}")
+                  .get(),
+              builder: (context, AsyncSnapshot productSnap) {
                 if(productSnap.hasError) {
                   return Scaffold(
                     body: Center(
@@ -64,50 +68,57 @@ class _CategoryTypesState extends State<CategoryTypes> {
                 }
 
                 if(productSnap.connectionState == ConnectionState.done) {
-                  Map<String, dynamic> prodData = productSnap.data.data();
+                  // Map<String, dynamic> prodData = productSnap.data;
                   int _amt = 0;
+                  if(productSnap.hasData) {
+                    // productSnap.data.map((prodData) {
+                      return GestureDetector(
+                        onTap: () async {
+                          _selectedProductName = await "${productSnap.data['name']}";
+                          _selectedProductID = await "${productSnap.data.id}";
+                          _selectedSrvcCtgryName = widget.serviceCategoryName;
+                          _selectedSrvcCtgryID = widget.serviceCategoryID;
 
-                  return GestureDetector(
-                    onTap: () async {
-                      _selectedProductName = "${prodData['name']}";
-                      _selectedProductID = "${productSnap.data.id}";
-                      _selectedSrvcCtgryName = widget.serviceCategoryName;
-                      _selectedSrvcCtgryID = widget.serviceCategoryID;
+                          setState(() {
+                            // _isSelected = index;
+                          });
 
-                      setState(() {
-                        // _isSelected = index;
-                      });
+                          // print("datentime: ${_firebaseServices.setDayAndTime()}");
 
-                      // print("datentime: ${_firebaseServices.setDayAndTime()}");
+                          await _selectedServiceProduct();
 
-                      await _selectedServiceProduct();
-
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) =>
-                            ServiceProductsPage(),
-                      ));
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          // "${widget.categoryTypeList[index]}",
-                          "${prodData['name']}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: _isSelected == index ? Colors.white : Colors.black,
-                            fontSize: 16,
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) =>
+                                ServiceProductsPage(),
+                          ));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              // "${widget.categoryTypeList[index]}",
+                              "${productSnap.data['name']}",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: _isSelected == index
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: _isSelected == index ? Theme.of(context).accentColor : Color(0xFFDCDCDC),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                          decoration: BoxDecoration(
+                            color: _isSelected == index ? Theme
+                                .of(context)
+                                .accentColor : Color(0xFFDCDCDC),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
 
-                    ),
-                  );
+                        ),
+                      );
+                    // });
+                  }
 
                 }
 

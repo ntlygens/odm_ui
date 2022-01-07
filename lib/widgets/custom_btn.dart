@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:odm_ui/constants.dart';
 
 class CustomBtn extends StatelessWidget {
-  const CustomBtn({this.dText, this.onPressed, this.outlineBtn, this.isLoading});
-
   final String dText;
-  final Function onPressed;
-  final bool outlineBtn;
-  final bool isLoading;
+  final Function() onPressed;
+  final bool? outlineBtn;
+  final bool? isLoading;
+
+  CustomBtn({required this.dText, required this.onPressed, this.outlineBtn, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
-    bool _outlineBtn = outlineBtn;
+    bool _outlineBtn = outlineBtn ?? false;
     bool _isLoading = isLoading ?? false;
 
     return GestureDetector(
@@ -24,7 +23,7 @@ class CustomBtn extends StatelessWidget {
           border: Border.all(color: Colors.black, width: 2.0),
           borderRadius: BorderRadius.circular(12),
         ),
-        margin: const EdgeInsets.symmetric(
+        margin: EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 8,
         ),
@@ -34,7 +33,7 @@ class CustomBtn extends StatelessWidget {
               visible: _isLoading ? false : true,
               child: Center(
                 child: Text(
-                  dText ?? "Text Here",
+                  dText,
                   // style: Constants.regHeading,
                   style: TextStyle(
                     fontSize: 16,

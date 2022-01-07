@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
 class ShoppingCartTab extends StatelessWidget {
-  // const ShoppingCartTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

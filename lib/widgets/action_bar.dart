@@ -6,10 +6,10 @@ import 'package:odm_ui/screens/cart_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 
 class ActionBar extends StatelessWidget {
-  final String title;
-  final bool hasBackArrow;
-  final bool hasTitle;
-  final bool hasBackground;
+  final String? title;
+  final bool? hasBackArrow;
+  final bool? hasTitle;
+  final bool? hasBackground;
 
   ActionBar({ this.title, this.hasBackArrow, this.hasTitle, this.hasBackground });
   FirebaseServices _firebaseServices = FirebaseServices();
@@ -83,16 +83,18 @@ class ActionBar extends StatelessWidget {
               alignment: Alignment.center,
               child: StreamBuilder(
                 stream: _firebaseServices.usersRef.doc(_firebaseServices.getUserID()).collection("Cart").snapshots(),
-                builder: (context, snapshot) {
+                builder: (context, AsyncSnapshot snapshot) {
                   int _totalItems = 0;
 
                   if( snapshot.connectionState == ConnectionState.active ) {
-                    List _documents = snapshot.data.docs;
-                    _totalItems = _documents.length;
-                  }
+                    if(snapshot.hasData) {
+                        List _documents = snapshot.data!.docs;
+                        _totalItems = _documents.length;
+                      }
+                    }
 
                   return Text(
-                    "$_totalItems" ?? "0",
+                    "$_totalItems",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

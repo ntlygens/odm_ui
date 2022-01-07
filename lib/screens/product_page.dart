@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 import 'package:odm_ui/widgets/category_types.dart';
 import 'package:odm_ui/widgets/image_swipe.dart';
@@ -8,7 +7,7 @@ import 'package:odm_ui/widgets/image_swipe.dart';
 import '../constants.dart';
 
 class ProductPage extends StatefulWidget {
-  final String productID;
+  final String? productID;
   ProductPage({this.productID});
 
   @override
@@ -16,8 +15,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final CollectionReference _productsRef =
-    FirebaseFirestore.instance.collection("Products");
+  FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +23,9 @@ class _ProductPageState extends State<ProductPage> {
       body: Stack(
         children: [
           FutureBuilder(
-            future: _productsRef.doc(widget.productID).get(),
-            builder: (context, snapshot) {
+            future: _firebaseServices.productsRef.doc(widget.productID).get(),
+            // future: _firebaseServices.productsRef.get(),
+            builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 return Scaffold(
                   body: Center(
@@ -36,56 +35,64 @@ class _ProductPageState extends State<ProductPage> {
               }
 
               if (snapshot.connectionState == ConnectionState.done) {
-                // Firebase doc data map
-                Map<String, dynamic> documentData = snapshot.data.data();
-
                 // List of images
-                List imageList = documentData['images'];
+                List _imageList;
                 // List of types
-                List categoryType = documentData['type'];
+                List _categoryType;
 
-                return ListView(
-                  padding: EdgeInsets.all(0),
-                  children: [
-                    ImageSwipe(imageList: imageList),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 24
-                      ),
-                      child: Text(
-                          "${documentData['name']}" ?? "Category Name",
-                        style: Constants.boldHeading,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 24
-                      ),
+                if(snapshot.hasData) {
+                  return ListView(
+                    padding: EdgeInsets.all(0),
+                    children: snapshot.data!.docs.map((documentData) {
+                      _imageList = documentData['images'];
+                      _categoryType = documentData['type'];
+                      Column(
+                        children: [
+                          ImageSwipe(imageList: _imageList),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 24
+                            ),
+                            child: Text(
+                              "${documentData['name']}",
+                              style: Constants.boldHeading,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 24
+                            ),
 
-                      child: Text(
-                          "${documentData['desc']}" ?? "Category Description",
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 24
-                      ),
-                      child: Text(
-                          "Select Type",
-                        style: Constants.regHeading,
-                      ),
-                    ),
-                    CategoryTypes(
-                      categoryTypeList: categoryType,
-                    ),
-                  ],
-                );
+                            child: Text(
+                              "${documentData['desc']}",
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 24
+                            ),
+                            child: Text(
+                              "Select Type",
+                              style: Constants.regHeading,
+                            ),
+                          ),
+                          CategoryTypes(
+                            categoryTypeList: _categoryType,
+                            serviceCategoryID: "selected-service-id",
+                            serviceCategoryName: "selected-service-name",
+                          ),
+                        ],
+                      );
+
+                    }),
+                  );
+                }
               }
 
               return Scaffold(

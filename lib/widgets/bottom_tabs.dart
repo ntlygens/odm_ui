@@ -2,16 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BottomTabs extends StatefulWidget {
-  final int selectedTab;
+  final int? selectedTab;
   final Function(int) tabClicked;
-  BottomTabs({this.selectedTab, this.tabClicked});
+  BottomTabs({this.selectedTab, required this.tabClicked});
 
 @override
   State<BottomTabs> createState() => _BottomTabsState();
 }
 
 class _BottomTabsState extends State<BottomTabs> {
-  int _selectedTab = 0;
+  int? _selectedTab = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _BottomTabsState extends State<BottomTabs> {
             imagePath: "assets/images/baseline_account_circle_black_18dp@2x.png",
             selected: _selectedTab == 1 ? true : false,
             onPressed: () {
-              widget.tabClicked(1);;
+              widget.tabClicked(1);
             },
           ),
           BottomTabsBtn(
@@ -71,15 +71,15 @@ class _BottomTabsState extends State<BottomTabs> {
 }
 
 class BottomTabsBtn extends StatelessWidget {
-  final String imagePath;
+  final String? imagePath;
   final bool selected;
-  final Function onPressed;
-  BottomTabsBtn({ this.imagePath, this.selected, this.onPressed });
+  final Function() onPressed;
+  BottomTabsBtn({required this.imagePath, required this.selected, required this.onPressed });
 
 
   @override
   Widget build(BuildContext context) {
-    bool _selected = selected ?? false;
+    bool _selected = selected;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -101,7 +101,7 @@ class BottomTabsBtn extends StatelessWidget {
           ),
           width: 24,
           height: 24,
-          color: _selected ? Theme.of(context).accentColor : Colors.black,
+          color: _selected ? Theme.of(context).colorScheme.primary : Colors.black,
         ),
       ),
     );

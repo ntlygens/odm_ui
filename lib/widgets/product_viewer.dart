@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:odm_ui/screens/merchant_service_page.dart';
+import 'package:odm_ui/screens/selected_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/custom_btn.dart';
 
 class ProductViewer extends StatefulWidget {
-  final String prodID;
-  final String prodName;
-  final String prodSrvcName;
-  final String prodSrvcID;
-  final bool isSelected;
-  final Function onPressed;
+  final String? prodID;
+  final String? prodName;
+  final String? prodSrvcName;
+  final String? prodSrvcID;
+  final bool? isSelected;
+  final Function? onPressed;
   const ProductViewer({this.prodID, this.isSelected, this.prodName, this.prodSrvcName, this.onPressed, this.prodSrvcID});
 
   @override
@@ -20,7 +20,7 @@ class _ProductViewerState extends State<ProductViewer> {
   FirebaseServices _firebaseServices = FirebaseServices();
   @override
   Widget build(BuildContext context) {
-    bool _isSelected = widget.isSelected;
+    bool _isSelected = widget.isSelected ?? false;
     return Column(
       children: [
         Container(
@@ -50,7 +50,7 @@ class _ProductViewerState extends State<ProductViewer> {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) =>
-                    MerchantServicePage(
+                    SelectedServicePage(
                       serviceID: "${widget.prodSrvcID}",
                     )
             ));
@@ -88,6 +88,7 @@ class _ProductViewerState extends State<ProductViewer> {
           child: CustomBtn(
             dText: "Remove",
             outlineBtn: false,
+            onPressed: () {print("clicked the Remove Btn");},
           ),
         )
       ],

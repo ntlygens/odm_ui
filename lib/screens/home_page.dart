@@ -1,7 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:odm_ui/constants.dart';
-import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/tabs/home_tab.dart';
 import 'package:odm_ui/tabs/profile_tab.dart';
 import 'package:odm_ui/tabs/search_tab.dart';
@@ -9,21 +6,18 @@ import 'package:odm_ui/tabs/shoppingcart_tab.dart';
 import 'package:odm_ui/widgets/bottom_tabs.dart';
 
 class HomePage extends StatefulWidget {
-  // const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  FirebaseServices _firebaseServices = FirebaseServices();
 
-  PageController _tabsPageController;
+  late PageController _tabsPageController;
   int _selectedTab = 0;
 
   @override
   void initState() {
-    // print("userID: ${_firebaseServices.getUserID()}");
     _tabsPageController = PageController();
     super.initState();
   }
@@ -48,7 +42,6 @@ class _HomePageState extends State<HomePage> {
                   setState(() {
                     _selectedTab = num;
                   });
-                  // print ("selected tab: ${_selectedTab}");
                 },
                 children: [
                   HomeTab(),

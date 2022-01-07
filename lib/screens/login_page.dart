@@ -6,7 +6,6 @@ import 'package:odm_ui/widgets/custom_btn.dart';
 import 'package:odm_ui/widgets/custom_input.dart';
 
 class LoginPage extends StatefulWidget {
-  // const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -39,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // create new user account
-  Future<String> _loginAccount() async {
+  Future _loginAccount() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: _loginEmail,
@@ -65,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     // run the create account method
-    String _loginFeedback = await _loginAccount();
+    String? _loginFeedback = await _loginAccount();
 
     // if string is not null error pops up
     if (_loginFeedback != null) {
@@ -86,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
   String _loginPassword = "";
 
   // focus node for input
-  FocusNode _passwordFocusNode;
+  late FocusNode _passwordFocusNode;
 
   @override
   void initState() {
@@ -112,10 +111,10 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   top: 24,
                 ),
-                child: const Text(
+                child: Text(
                   "Welcome User \nLogin to your account",
                   textAlign: TextAlign.center,
                   style: Constants.boldHeading,
@@ -162,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(
+                padding: EdgeInsets.only(
                   // top: 6,
                   bottom: 16,
                 ),
@@ -170,12 +169,12 @@ class _LoginPageState extends State<LoginPage> {
                   dText: "Create New Account",
                   onPressed: () {
                     // WidgetsBinding.instance!.addPostFrameCallback((_) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterPage()
-                        ),
-                      );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterPage()
+                      ),
+                    );
                     // });
                     print ("clicked the create act btn");
                   },

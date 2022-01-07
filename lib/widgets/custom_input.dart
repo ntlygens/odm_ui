@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 
 class CustomInput extends StatelessWidget {
-  final String hintText;
-  final Function(String) onChanged;
-  final Function(String) onSubmitted;
-  final FocusNode focusNode;
-  final TextInputAction textInputAction;
-  final bool isPasswordField;
+  final String? hintText;
+  final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final bool? isPasswordField;
 
   CustomInput({this.hintText, this.onChanged, this.onSubmitted, this.focusNode, this.textInputAction, this.isPasswordField});
 

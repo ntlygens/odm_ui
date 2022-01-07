@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
         accentColor: Color(0xFFFF1E80),
+        // colorScheme: ColorScheme.fromSwatch(),
       ),
       home: LandingPage(),
     );
