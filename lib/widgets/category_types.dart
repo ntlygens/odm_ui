@@ -80,7 +80,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
                           _selectedSrvcCtgryID = widget.serviceCategoryID;
 
                           setState(() {
-                            // _isSelected = index;
+                            _isSelected = index;
                           });
 
                           // print("datentime: ${_firebaseServices.setDayAndTime()}");
@@ -112,7 +112,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
                             color: _isSelected == index ? Theme
                                 .of(context)
                                 .accentColor : Color(0xFFDCDCDC),
-                            borderRadius: BorderRadius.circular(8),
+                             borderRadius: BorderRadius.circular(8),
                           ),
 
                         ),
