@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/service_products_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
@@ -20,18 +18,6 @@ class SelectedServicePage extends StatefulWidget {
 
 class _SelectedServicePageState extends State<SelectedServicePage> {
   FirebaseServices _firebaseServices = FirebaseServices();
-
-  // User -> userID -> Cart ->
-
-  String _selectedCategoryType = "0";
-
-  Future _addToCart() {
-    return _firebaseServices.usersRef
-        .doc(_firebaseServices.getUserID())
-        .collection("Cart")
-        .doc(widget.serviceID)
-        .set({ "type": _selectedCategoryType });
-  }
 
   final _snackBar = SnackBar(content: Text("Product added to Cart"));
 
@@ -96,7 +82,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
-                                        color: Theme.of(context).accentColor,
+                                        color: Color(0xFFFF1E80)
                                       )
 
                                   ),
@@ -124,6 +110,25 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                             borderRadius: BorderRadius.circular(12)
                                         ),
                                         alignment: Alignment.center,
+                                        /// ** // Reset DB Button Below IMPORTANT!!! //
+                                        /*child: IconButton(
+                                          onPressed: () {
+                                            _firebaseServices.productsRef
+                                                .get()
+                                                .then(
+                                                  (value) => value.docs.forEach(
+                                                    (element) {
+                                                  var docRef = _firebaseServices.productsRef
+                                                      .doc(element.id);
+
+                                                  docRef.update({'isSelected': false});
+                                                },
+                                              ),
+                                            );
+                                          },
+                                          icon: Icon(Icons.done),
+                                        ),*/
+                                        /// ** // Reset DB Button Below IMPORTANT!!! //
                                         child: Image(
                                           image: AssetImage(
                                             "assets/images/bookmark_icon.png",
@@ -133,7 +138,6 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                           // width: 42
 
                                         ),
-
                                       ),
                                       Expanded(
                                         child: GestureDetector(
@@ -146,9 +150,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                             Navigator.push(context, MaterialPageRoute(
                                               builder: (context) =>
                                                   ServiceProductsPage(),
-                                            )
-                                            );
-                                            // print("Product Added");
+                                            ));
                                           },
                                           child: Container(
                                             height: 65,

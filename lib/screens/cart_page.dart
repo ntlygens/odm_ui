@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
-
-import '../constants.dart';
 import 'selected_service_page.dart';
 
 class CartPage extends StatefulWidget {

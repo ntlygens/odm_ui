@@ -18,8 +18,10 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.acmeTextTheme(
           Theme.of(context).textTheme,
         ),
-        accentColor: Color(0xFFFF1E80),
-        // colorScheme: ColorScheme.fromSwatch(),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(
+              secondary: Color(0xFFFF1E80),
+            ),
       ),
       home: LandingPage(),
     );

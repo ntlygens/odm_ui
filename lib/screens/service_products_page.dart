@@ -19,57 +19,6 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
     return Scaffold(
       body: Stack(
         children: [
-          /// working functions below ///
-          /*FutureBuilder(
-            // get all selected documents from SelectedService
-            future: _firebaseServices.usersRef.doc(
-                _firebaseServices.getUserID()
-            ).collection("SelectedService").orderBy("date", descending: true).get(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if( snapshot.hasError) {
-                return Scaffold(
-                  body: Center(
-                    child: Text("Error: ${snapshot.error}"),
-                  ),
-                );
-              }
-
-              if(snapshot.connectionState == ConnectionState.done) {
-                List _prodData = snapshot.data.docs;
-                print("prodID: ${_prodData[0].id}");
-                // Collect Selected docs into array / ListView
-                // display data in listview
-                return ListView(
-                  padding: EdgeInsets.only(
-                    top: 110,
-                    bottom: 20,
-                  ),
-                  children:  [
-                    // children: _prodData.map((prodData, index) =>
-                    for(var i = 0; i < _prodData.length; i++)
-                    // seperate array into individual documents
-                      ProductViewer(
-                        isSelected: i == 0,
-                        prodID: _prodData[i]['srvc'],
-                        prodName: _prodData[i]['name'],
-                        prodSrvcID: _prodData[i]['srvcCtgryID'],
-                        prodSrvcName: _prodData[i]['srvcCtgry'],
-                        srvcProdID: _prodData[i].id,
-                      )
-
-                  ]
-                );
-              }
-
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
-          ),*/
-          /// working functions above  ///
-
           StreamBuilder(
             // get all selected documents from SelectedService
             stream: _firebaseServices.usersRef
@@ -85,12 +34,11 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                   ),
                 );
               }*/
-              int _totalItems = 0;
 
               if(snapshot.connectionState == ConnectionState.active) {
                 if(snapshot.hasData){
                     List _prodData = snapshot.data.docs;
-                    print("prodID: ${_prodData[0].id}");
+                    // print("prodID: ${_prodData[0].id}");
                     // Collect Selected docs into array / ListView
                     // display data in listview
                     return ListView(
@@ -104,8 +52,8 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                             // seperate array into individual documents
                             ProductViewer(
                               isSelected: i == 0,
-                              prodID: _prodData[i]['srvc'],
-                              prodName: _prodData[i]['name'],
+                              prodID: _prodData[i]['prodID'],
+                              prodName: _prodData[i]['prodName'],
                               prodSrvcID: _prodData[i]['srvcCtgryID'],
                               prodSrvcName: _prodData[i]['srvcCtgry'],
                               srvcProdID: _prodData[i].id,

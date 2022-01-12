@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/widgets/custom_input.dart';
-import 'login_page.dart';
 import 'package:odm_ui/widgets/custom_btn.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Text(error),
             ),
             actions: [
-              FlatButton(
+              TextButton(
                 child: Text("Close Dialog"),
                 onPressed: () {
                   Navigator.pop(context);

@@ -33,8 +33,19 @@ class _ProductViewerState extends State<ProductViewer> {
         .doc(value)
         .delete()
         .then((_) {
-          _refreshServiceProduct;
-          print("success!");
+          print("product ${value} removed");
+          // _resetProductIsSelected();
+        });
+  }
+
+  Future _resetProductIsSelected(value) async {
+    return _firebaseServices.productsRef
+        .doc(value)
+        .update({"isSelected" : false})
+        .then((_) {
+          print("product ${value} UnSelected");
+          // _refreshServiceProduct;
+          _removeServiceProduct(widget.srvcProdID);
         });
   }
 
@@ -45,10 +56,11 @@ class _ProductViewerState extends State<ProductViewer> {
         .orderBy("date", descending: true)
         .get()
         .then((_) {
-          // print("amt left: ${}");
+          print("list refreshed");
         });
 
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +141,7 @@ class _ProductViewerState extends State<ProductViewer> {
                     dText: "Remove",
                     outlineBtn: false,
                     onPressed: () {
-                      print("Removed doc: ${widget.srvcProdID}");
+                      // print("Removed: ${widget.prodName}");
                       _removeServiceProduct(widget.srvcProdID);
 
                     },
@@ -140,6 +152,7 @@ class _ProductViewerState extends State<ProductViewer> {
           )
         else
           Card(
+            elevation: 3,
             margin: EdgeInsets.symmetric(
                 vertical: 6,
                 horizontal: 12
@@ -215,8 +228,9 @@ class _ProductViewerState extends State<ProductViewer> {
                     dText: "Remove",
                     outlineBtn: false,
                     onPressed: () {
-                      print("Removed doc: ${widget.srvcProdID}");
-                      _removeServiceProduct(widget.srvcProdID);
+                      _resetProductIsSelected(widget.prodID);
+                      // print("Remove doc: ${widget.prodID}");
+                      // _removeServiceProduct(widget.srvcProdID);
 
                     },
                   ),

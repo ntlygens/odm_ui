@@ -53,6 +53,9 @@ dependencies:
   # BLoC Data Seperation
   flutter_bloc: ^8.0.0
 
+  # Equatable
+  equatable: ^2.0.3
+
 
 dev_dependencies:
   flutter_test:
