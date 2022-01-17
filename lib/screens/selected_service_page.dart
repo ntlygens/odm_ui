@@ -111,7 +111,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                         ),
                                         alignment: Alignment.center,
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
-                                        /*child: IconButton(
+                                        child: IconButton(
                                           onPressed: () {
                                             _firebaseServices.productsRef
                                                 .get()
@@ -127,9 +127,9 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                             );
                                           },
                                           icon: Icon(Icons.done),
-                                        ),*/
+                                        ),
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
-                                        child: Image(
+                                        /*child: Image(
                                           image: AssetImage(
                                             "assets/images/bookmark_icon.png",
                                           ),
@@ -137,7 +137,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                           height: 22,
                                           // width: 42
 
-                                        ),
+                                        ),*/
                                       ),
                                       Expanded(
                                         child: GestureDetector(

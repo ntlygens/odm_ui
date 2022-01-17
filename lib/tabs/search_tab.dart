@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odm_ui/screens/search_page.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
 
 class SearchTab extends StatefulWidget {
@@ -12,7 +13,8 @@ class _SearchTabState extends State<SearchTab> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Stack(
+      child: SearchPage(),
+      /*child: Stack(
         children: [
           Center(
             child: Text("Search Tab"),
@@ -23,7 +25,7 @@ class _SearchTabState extends State<SearchTab> {
             hasBackArrow: true,
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

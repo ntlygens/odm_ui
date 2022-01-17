@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/selected_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/custom_btn.dart';
+import 'package:odm_ui/widgets/product_wndw.dart';
 
 class ProductViewer extends StatefulWidget {
   final String? prodID;
@@ -34,7 +35,7 @@ class _ProductViewerState extends State<ProductViewer> {
         .delete()
         .then((_) {
           print("product ${value} removed");
-          // _resetProductIsSelected();
+          // _refreshServiceProduct();
         });
   }
 
@@ -69,15 +70,18 @@ class _ProductViewerState extends State<ProductViewer> {
       children: [
         if(_isSelected)
           Padding(
-            padding: EdgeInsets.all(0),
+            padding: EdgeInsets.all(8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                ProductWndw(prodName: "${widget.prodName}"),
+                ProductWndw(prodName: "${widget.prodName}"),
+                ProductWndw(prodName: "${widget.prodName}"),
+                /*Container(
                   // future: _firebaseServices.servicesRef.doc(document.id).get(),
                   decoration: BoxDecoration(
-                    color: _isSelected ? Colors.amberAccent : Colors.blueGrey,
+                    color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   // height: _isSelected ? 300 : 55,
@@ -98,7 +102,37 @@ class _ProductViewerState extends State<ProductViewer> {
                         fontWeight: FontWeight.w600
                     ),
                   ),
-                ),
+                ),*/
+
+
+                /// Original Below ///
+                /*Container(
+                  // future: _firebaseServices.servicesRef.doc(document.id).get(),
+                  decoration: BoxDecoration(
+                    color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  // height: _isSelected ? 300 : 55,
+                  height: _isSelected ? 350 : 65,
+                  // width: double.infinity,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    top: 20,
+                    right: 14,
+                    bottom: 24,
+                    left: 14,
+                  ),
+                  child: Text(
+                    "${widget.prodName}",
+                    style: TextStyle(
+                        color: _isSelected ? Colors.black : Colors.black54,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
+                ),*/
+                /// Original Above ///
+                ///
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
@@ -130,7 +164,8 @@ class _ProductViewerState extends State<ProductViewer> {
                     ),
                   ),
                 ),
-                Container(
+                // ** Temporarily removed to test button not being unselected
+                /*Container(
                   height: _isSelected ? 65 : 50,
                   margin: EdgeInsets.only(
                     right: _isSelected ? 12 : 24,
@@ -146,7 +181,8 @@ class _ProductViewerState extends State<ProductViewer> {
 
                     },
                   ),
-                )
+                )*/
+                // ** Above temporarily removed
               ],
             ),
           )
@@ -158,7 +194,7 @@ class _ProductViewerState extends State<ProductViewer> {
                 horizontal: 12
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(

@@ -20,7 +20,6 @@ class CategoryTypes extends StatefulWidget {
 }
 
 class _CategoryTypesState extends State<CategoryTypes> {
-  int _isSelected = 0;
   String? _selectedProductName = "selected-product-name";
   String _selectedProductID = "selected-produc-id";
   String _selectedProductSrvcID = "selected-produc-service-id";
@@ -104,7 +103,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
                         // _prodSelected = true;
 
                         setState(() {
-                          _isSelected = index;
+                          // _isSelected = index;
                         });
 
                         // print("datentime: ${_firebaseServices.setDayAndTime()}");

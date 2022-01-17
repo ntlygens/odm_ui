@@ -1,9 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:odm_ui/screens/landing_page.dart';
 
-void main() {
+void main() async {
+  // print('-- main');
+  WidgetsFlutterBinding.ensureInitialized();
+  // print('-- WidgetsFlutterBinding.ensureInitialized');
+  await Firebase.initializeApp();
+  // print('-- main: Firebase.initializeApp');
   runApp( MyApp() );
 }
 
@@ -20,7 +25,8 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(
-              secondary: Color(0xFFFF1E80),
+              primary: Color(0xFFFF1E80),
+              secondary: Color(0xFF1EFF22),
             ),
       ),
       home: LandingPage(),

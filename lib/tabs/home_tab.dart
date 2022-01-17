@@ -48,23 +48,17 @@ class HomeTab extends StatelessWidget {
                                   )
                           ));
                         },
-                        child: Container(
-                          // height: 225,
-                          // width: double.infinity,
-                          // alignment: Alignment.topCenter,
+                        child: Card(
+                          elevation: 3,
                           margin: EdgeInsets.symmetric(
-                            vertical: 2,
-                            horizontal: 14,
+                            vertical: 8,
+                            horizontal: 16,
                           ),
                           child: Stack(
                             children: [
                               Container(
-                                // padding: EdgeInsets.only(
-                                //   bottom: 24
-                                // ),
-                                // height: 210,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(6),
                                   child: Image.network(
                                     "${document['images'][0]}",
                                     fit: BoxFit.cover,

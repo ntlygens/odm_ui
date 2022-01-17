@@ -41,24 +41,31 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                     // print("prodID: ${_prodData[0].id}");
                     // Collect Selected docs into array / ListView
                     // display data in listview
-                    return ListView(
-                        padding: EdgeInsets.only(
-                          top: 110,
-                          bottom: 20,
-                        ),
-                        children: [
-                          // children: _prodData.map((prodData, index) =>
-                          for (var i = 0; i < _prodData.length; i++)
-                            // seperate array into individual documents
-                            ProductViewer(
-                              isSelected: i == 0,
-                              prodID: _prodData[i]['prodID'],
-                              prodName: _prodData[i]['prodName'],
-                              prodSrvcID: _prodData[i]['srvcCtgryID'],
-                              prodSrvcName: _prodData[i]['srvcCtgry'],
-                              srvcProdID: _prodData[i].id,
-                            )
-                        ]);
+                    return ListView.builder (
+                      itemCount: _prodData.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                              padding : EdgeInsets.only(
+                                top: 110,
+                                bottom: 20,
+                              ),
+                              // children: [
+                              // children: _prodData.map((prodData, index) =>
+                              ///// for (var i = 0; i < _prodData.length; i++)
+                                // seperate array into individual documents
+                              child: ProductViewer(
+                                  isSelected: index == 0,
+                                  prodID: _prodData[index]['prodID'],
+                                  prodName: _prodData[index]['prodName'],
+                                  prodSrvcID: _prodData[index]['srvcCtgryID'],
+                                  prodSrvcName: _prodData[index]['srvcCtgry'],
+                                  srvcProdID: _prodData[index].id,
+                                )
+                            // ]
+                          );
+                        },
+
+                    );
                   }
                 }
 

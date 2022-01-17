@@ -14,8 +14,9 @@ class _ImageSwipeState extends State<ImageSwipe> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // alignment: Alignment.topCenter,
-      height: 230,
+      alignment: Alignment.topCenter,
+      height: 200,
+      margin: EdgeInsets.only(bottom: 20),
       child: Stack(
         children: [
           PageView(
