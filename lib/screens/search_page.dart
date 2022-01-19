@@ -25,7 +25,7 @@ class _SearchPageState extends State<SearchPage> {
     userBloc.userController.sink.add(searchResult);
 
     if (searchQuery.isEmpty) {
-      userBloc.userController.sink.add(totalUsers);
+      userBloc.userController.sink.add(searchResult);
       return;
     }
     totalUsers.forEach((user) {
@@ -60,6 +60,7 @@ class _SearchPageState extends State<SearchPage> {
         body: Column(
           children: <Widget>[
             SizedBox(height: 20),
+            /// search banner ///
             Container(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -94,6 +95,8 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             ),
+
+            /// data display widget ///
             Expanded(child: usersWidget())
           ],
         ),

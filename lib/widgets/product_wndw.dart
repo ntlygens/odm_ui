@@ -1,12 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:odm_ui/widgets/action_bar.dart';
 
 class ProductWndw extends StatefulWidget {
   final String prodName;
+  final String prodID;
+  final bool? isSelected;
+  final List? prodSeller;
 
-  const ProductWndw({Key? key, required this.prodName}) : super(key: key);
+  const ProductWndw({Key? key, required this.prodName, this.prodSeller, required this.prodID, this.isSelected});
 
   @override
   _ProductWndwState createState() => _ProductWndwState();
@@ -55,12 +55,13 @@ class _ProductWndwState extends State<ProductWndw> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(4.0),
                 child: Text(
                     "${widget.prodName}".toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
+                  softWrap: true,
                 ),
               ),
               Padding(

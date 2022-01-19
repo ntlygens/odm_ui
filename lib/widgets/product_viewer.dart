@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/selected_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
@@ -11,13 +12,15 @@ class ProductViewer extends StatefulWidget {
   final String? prodSrvcID;
   final String srvcProdID;
   final bool? isSelected;
+  final List? prodSellers;
   const ProductViewer({
     this.prodID,
     this.isSelected,
     this.prodName,
     this.prodSrvcName,
     this.prodSrvcID,
-    required this.srvcProdID
+    required this.srvcProdID,
+    this.prodSellers
   });
 
   @override
@@ -62,6 +65,17 @@ class _ProductViewerState extends State<ProductViewer> {
 
   }
 
+  Future _getProductSellers() async {
+    return _firebaseServices.productsRef
+        .doc(widget.prodID)
+        .snapshots();
+        // .get();
+        // .then((_) {
+        //   print("product sellers list");
+        // });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,16 +83,62 @@ class _ProductViewerState extends State<ProductViewer> {
     return Column(
       children: [
         if(_isSelected)
-          Padding(
+          Container(
+            height: 400,
+            margin: EdgeInsets.only(top: 110),
             padding: EdgeInsets.all(8),
-            child: Column(
+            child: FutureBuilder(
+              // future: _getProductSellers(),
+              future:_firebaseServices.productsRef
+              .doc(widget.prodID)
+              .get(),
+              builder: (context, AsyncSnapshot prodSellerSnap) {
+                if (prodSellerSnap.hasError){
+                  return Container(
+                    child: Text("ERROR: ${prodSellerSnap.error}"),
+                  );
+                }
+
+                if(prodSellerSnap.connectionState == ConnectionState.done) {
+                  if(prodSellerSnap.hasData) {
+                    List _sellerData = prodSellerSnap.data['seller'];
+                    print("product: ${prodSellerSnap.data.id}");
+                    print("sellers: ${prodSellerSnap.data['seller']}");
+                    // print("sellers: ${_sellerData.length}");
+                    return ListView.builder(
+                      itemCount: _sellerData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 50,
+                          width: 250,
+                          child: Text("Seller: ${_sellerData[index]}"),
+                        );
+                      });
+                  }
+
+                }
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
+
+            /*child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ProductWndw(prodName: "${widget.prodName}"),
-                ProductWndw(prodName: "${widget.prodName}"),
-                ProductWndw(prodName: "${widget.prodName}"),
-                /*Container(
+              children: <Widget>[
+                _getProductSellers(widget.prodID);
+                *//*ProductWndw(
+                  prodName: "${widget.prodName}",
+                  prodID: "${widget.prodID}",
+                ),
+                ProductWndw(
+                  prodID: "${widget.prodID}",
+                  prodName: "${widget.prodName}"
+                ),*//*
+                *//*Container(
                   // future: _firebaseServices.servicesRef.doc(document.id).get(),
                   decoration: BoxDecoration(
                     color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
@@ -102,11 +162,11 @@ class _ProductViewerState extends State<ProductViewer> {
                         fontWeight: FontWeight.w600
                     ),
                   ),
-                ),*/
+                ),*//*
 
 
                 /// Original Below ///
-                /*Container(
+                *//*Container(
                   // future: _firebaseServices.servicesRef.doc(document.id).get(),
                   decoration: BoxDecoration(
                     color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
@@ -130,7 +190,7 @@ class _ProductViewerState extends State<ProductViewer> {
                         fontWeight: FontWeight.w600
                     ),
                   ),
-                ),*/
+                ),*//*
                 /// Original Above ///
                 ///
                 GestureDetector(
@@ -165,7 +225,7 @@ class _ProductViewerState extends State<ProductViewer> {
                   ),
                 ),
                 // ** Temporarily removed to test button not being unselected
-                /*Container(
+                *//*Container(
                   height: _isSelected ? 65 : 50,
                   margin: EdgeInsets.only(
                     right: _isSelected ? 12 : 24,
@@ -181,10 +241,10 @@ class _ProductViewerState extends State<ProductViewer> {
 
                     },
                   ),
-                )*/
+                )*//*
                 // ** Above temporarily removed
               ],
-            ),
+            ),*/
           )
         else
           Card(

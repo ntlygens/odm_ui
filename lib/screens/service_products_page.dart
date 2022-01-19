@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/product_viewer.dart';
@@ -19,7 +20,7 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
     return Scaffold(
       body: Stack(
         children: [
-          StreamBuilder(
+          StreamBuilder<QuerySnapshot>(
             // get all selected documents from SelectedService
             stream: _firebaseServices.usersRef
                 .doc(_firebaseServices.getUserID())
@@ -44,11 +45,11 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                     return ListView.builder (
                       itemCount: _prodData.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                              padding : EdgeInsets.only(
-                                top: 110,
+                          return Container(
+                              /*padding : EdgeInsets.only(
+                                top: 10,
                                 bottom: 20,
-                              ),
+                              ),*/
                               // children: [
                               // children: _prodData.map((prodData, index) =>
                               ///// for (var i = 0; i < _prodData.length; i++)
@@ -59,6 +60,7 @@ class _ServiceProductsPageState extends State<ServiceProductsPage> {
                                   prodName: _prodData[index]['prodName'],
                                   prodSrvcID: _prodData[index]['srvcCtgryID'],
                                   prodSrvcName: _prodData[index]['srvcCtgry'],
+                                  // prodSellers: [''],
                                   srvcProdID: _prodData[index].id,
                                 )
                             // ]
