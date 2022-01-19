@@ -83,168 +83,168 @@ class _ProductViewerState extends State<ProductViewer> {
     return Column(
       children: [
         if(_isSelected)
-          Container(
-            height: 400,
-            margin: EdgeInsets.only(top: 110),
-            padding: EdgeInsets.all(8),
-            child: FutureBuilder(
-              // future: _getProductSellers(),
-              future:_firebaseServices.productsRef
-              .doc(widget.prodID)
-              .get(),
-              builder: (context, AsyncSnapshot prodSellerSnap) {
-                if (prodSellerSnap.hasError){
-                  return Container(
-                    child: Text("ERROR: ${prodSellerSnap.error}"),
-                  );
-                }
+          Column(
+            children: [
+              /// selected product name
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  border: Border(
+                    top: BorderSide(color: Colors.green),
+                    bottom: BorderSide(color: Colors.green),
+                  ),
+                ),
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                    top: 100,
+                    right: 48,
+                    bottom: 10,
+                    left: 48
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "${widget.prodName}",
+                  style: TextStyle(
+                      fontSize: 28,
+                  ),
+                ),
+              ),
 
-                if(prodSellerSnap.connectionState == ConnectionState.done) {
-                  if(prodSellerSnap.hasData) {
-                    List _sellerData = prodSellerSnap.data['seller'];
-                    print("product: ${prodSellerSnap.data.id}");
-                    print("sellers: ${prodSellerSnap.data['seller']}");
-                    // print("sellers: ${_sellerData.length}");
-                    return ListView.builder(
-                      itemCount: _sellerData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 50,
-                          width: 250,
-                          child: Text("Seller: ${_sellerData[index]}"),
+              /// seller grid
+              Container(
+                // height: 400,
+                // margin: EdgeInsets.only(top: 0),
+                padding: EdgeInsets.all(16),
+                child: FutureBuilder(
+                  // future: _getProductSellers(),
+                  future:_firebaseServices.productsRef
+                  .doc(widget.prodID)
+                  .get(),
+                  builder: (context, AsyncSnapshot prodSellerSnap) {
+                    if (prodSellerSnap.hasError){
+                      return Container(
+                        child: Text("ERROR: ${prodSellerSnap.error}"),
+                      );
+                    }
+
+                    if(prodSellerSnap.connectionState == ConnectionState.done) {
+                      if(prodSellerSnap.hasData) {
+                        List _sellerData = prodSellerSnap.data['seller'];
+                        print("product: ${prodSellerSnap.data['name']}");
+                        print("sellers: ${prodSellerSnap.data['seller']}");
+
+                        return GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 120,
+                                childAspectRatio: 1 / 1,
+                                // mainAxisSpacing: 0
+                            ),
+                            itemCount: _sellerData.length,
+                            itemBuilder: (BuildContext ctx, index) {
+                              return StreamBuilder(
+                                stream: _firebaseServices.sellersRef
+                                    .doc("${_sellerData[index]}")
+                                    .snapshots(),
+                                builder: (context, AsyncSnapshot sellerSnap) {
+
+                                  if(sellerSnap.connectionState == ConnectionState.active) {
+                                    if(sellerSnap.hasData) {
+                                      // print("ID: ${sellerSnap.data.id} \n Name: ${sellerSnap.data['name']}");
+                                      return ProductWndw(
+                                        sellerID: "${sellerSnap.data['sellerID']}",
+                                        sellerName: "${sellerSnap.data['name']}",
+                                        sellerLogo: "${sellerSnap.data['logo']}",
+                                        prodQty: "${sellerSnap.data['inStockQty']}",
+                                        prodID: "${widget.prodID}",
+                                        prodName: "${widget.prodName}",
+                                        isSelected: sellerSnap.data['hasItem'],
+                                      );
+                                    }
+
+                                  }
+
+                                  return Scaffold(
+                                    body: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
                         );
-                      });
-                  }
 
-                }
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              },
-            ),
+                      }
 
-            /*child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _getProductSellers(widget.prodID);
-                *//*ProductWndw(
-                  prodName: "${widget.prodName}",
-                  prodID: "${widget.prodID}",
-                ),
-                ProductWndw(
-                  prodID: "${widget.prodID}",
-                  prodName: "${widget.prodName}"
-                ),*//*
-                *//*Container(
-                  // future: _firebaseServices.servicesRef.doc(document.id).get(),
-                  decoration: BoxDecoration(
-                    color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  // height: _isSelected ? 300 : 55,
-                  height: _isSelected ? 350 : 65,
-                  // width: double.infinity,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    top: 20,
-                    right: 14,
-                    bottom: 24,
-                    left: 14,
-                  ),
-                  child: Text(
-                    "${widget.prodName}",
-                    style: TextStyle(
-                        color: _isSelected ? Colors.black : Colors.black54,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ),*//*
-
-
-                /// Original Below ///
-                *//*Container(
-                  // future: _firebaseServices.servicesRef.doc(document.id).get(),
-                  decoration: BoxDecoration(
-                    color: _isSelected ? Theme.of(context).colorScheme.secondary : Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  // height: _isSelected ? 300 : 55,
-                  height: _isSelected ? 350 : 65,
-                  // width: double.infinity,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    top: 20,
-                    right: 14,
-                    bottom: 24,
-                    left: 14,
-                  ),
-                  child: Text(
-                    "${widget.prodName}",
-                    style: TextStyle(
-                        color: _isSelected ? Colors.black : Colors.black54,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600
-                    ),
-                  ),
-                ),*//*
-                /// Original Above ///
-                ///
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                        builder: (context) =>
-                            SelectedServicePage(
-                              serviceID: "${widget.prodSrvcID}",
-                            )
-                    ));
-
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: _isSelected ? Colors.amberAccent : Colors.grey,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    height: _isSelected ? 55 : 45,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(
-                      vertical: _isSelected ? 6 : 0,
-                      horizontal: _isSelected ? 24 : 48,
-                    ),
-                    child: Text(
-                      "${widget.prodSrvcName}",
-                      style: TextStyle(
-                          color: _isSelected ? Colors.white : Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600
+                    }
+                    return Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
+                    );
+                  },
+                ),
+              ),
+
+              /// return to service button
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) =>
+                      SelectedServicePage(
+                        serviceID: "${widget.prodSrvcID}",
+                      )
+                    )
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: _isSelected ? Colors.amberAccent : Colors.grey,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  height: _isSelected ? 55 : 45,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(
+                    top: 8,
+                    right: 28,
+                    bottom: 40,
+                    left: 28,
+                  ),
+                  child: Text(
+                    "${widget.prodSrvcName}",
+                    style: TextStyle(
+                      color: _isSelected ? Colors.white : Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
                     ),
                   ),
-                ),
-                // ** Temporarily removed to test button not being unselected
-                *//*Container(
-                  height: _isSelected ? 65 : 50,
-                  margin: EdgeInsets.only(
-                    right: _isSelected ? 12 : 24,
-                    bottom: _isSelected ? 24 : 14,
-                    left: _isSelected ? 12 : 24,
-                  ),
-                  child: CustomBtn(
-                    dText: "Remove",
-                    outlineBtn: false,
-                    onPressed: () {
-                      // print("Removed: ${widget.prodName}");
-                      _removeServiceProduct(widget.srvcProdID);
+                )
+              ),
 
-                    },
+              /// recently viewed banner
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  border: Border(
+                    top: BorderSide(color: Colors.green),
+                    bottom: BorderSide(color: Colors.green),
                   ),
-                )*//*
-                // ** Above temporarily removed
-              ],
-            ),*/
+                ),
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                  top: 30,
+                  right: 12,
+                  bottom: 18,
+                  left: 12
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  'Recently Viewed',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ]
           )
         else
           Card(

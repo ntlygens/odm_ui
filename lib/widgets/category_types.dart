@@ -78,19 +78,8 @@ class _CategoryTypesState extends State<CategoryTypes> {
                   .doc("${widget.categoryTypeList[index]}")
                   .snapshots(),
               builder: (context, AsyncSnapshot productSnap) {
-                /*if(productSnap.hasError) {
-                  return Scaffold(
-                    body: Center(
-                      child: Text("Error: ${productSnap.error}"),
-                    ),
-                  );
-                }*/
 
                 if(productSnap.connectionState == ConnectionState.active) {
-                  // Map<String, dynamic> prodData = productSnap.data;
-                  // bool _prodSelected = false;
-                  // print("servProdsAmt: ${widget.categoryTypeList.length}");
-                  // int _amt = 0;
                   if(productSnap.hasData) {
                     // print("ID: ${productSnap.data.id} \n Name: ${productSnap.data['name']}");
                     return GestureDetector(
