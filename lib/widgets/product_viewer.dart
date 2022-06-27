@@ -1,8 +1,12 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/selected_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/custom_btn.dart';
+import 'package:odm_ui/widgets/prod_n_price.dart';
 import 'package:odm_ui/widgets/product_wndw.dart';
 
 class ProductViewer extends StatefulWidget {
@@ -68,12 +72,43 @@ class _ProductViewerState extends State<ProductViewer> {
   Future _getProductSellers() async {
     return _firebaseServices.productsRef
         .doc(widget.prodID)
-        .snapshots();
+        .snapshots().where((event) => event['type']);
         // .get();
-        // .then((_) {
-        //   print("product sellers list");
-        // });
+        // .then((value) => value['type']);
+  }
 
+  /*Future _getAltProduct() async {
+    // late List dList = [];
+    var bList = [];
+    return _firebaseServices.productsRef
+      .doc(widget.prodID)
+      .snapshots();
+      // .where("name",
+        // isNull: true,
+        isEqualTo: widget.prodName
+        // arrayContains: ""
+      // )
+      // .orderBy("seller")
+    ;
+    dSellers.get()
+        .then((value) => value.docs
+        .forEach((element) {
+      bList.add(element['type']);
+      // print("el ${element['type']}");
+      // print("list: ${dList}");
+      // return element['type'];
+       // dList;
+    }));
+    print("list: ${bList}");
+    return dSellers;
+  }*/
+
+  @override
+  void initState() {
+     // _getAltProduct();
+    _getProductSellers();
+    // TODO: implement initState
+    super.initState();
   }
 
 
@@ -85,8 +120,13 @@ class _ProductViewerState extends State<ProductViewer> {
         if(_isSelected)
           Column(
             children: [
-              /// selected product name
-              Container(
+              ProdNPrice(
+                prodName: "${widget.prodName}",
+                altProds: ['tea', 'eel', 'urchin'],
+              ),
+
+              /// selected product NAME
+              /*Container(
                 decoration: BoxDecoration(
                   color: Colors.white70,
                   border: Border(
@@ -108,9 +148,37 @@ class _ProductViewerState extends State<ProductViewer> {
                       fontSize: 28,
                   ),
                 ),
-              ),
+              ),*/
 
-              /// seller grid
+              /// lowest product PRICE
+              /*Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border(
+                    // top: BorderSide(color: Colors.green),
+                    // bottom: BorderSide(color: Colors.green),
+                  ),
+                ),
+                alignment: Alignment.center,
+                margin: EdgeInsets.only(
+                    top: 10,
+                    right: 110,
+                    bottom: 0,
+                    left: 110
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "~~   \$12.90   ~~",
+                  // "${widget.prodName}",
+                  style: TextStyle(
+                      fontSize: 22,
+                    color: Color(0xFFFF1E80),
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),*/
+
+              /// seller GRID
               Container(
                 // height: 400,
                 // margin: EdgeInsets.only(top: 0),
@@ -131,13 +199,13 @@ class _ProductViewerState extends State<ProductViewer> {
                       if(prodSellerSnap.hasData) {
                         List _sellerData = prodSellerSnap.data['seller'];
                         print("product: ${prodSellerSnap.data['name']}");
-                        print("sellers: ${prodSellerSnap.data['seller']}");
+                        /// print("sellers: ${prodSellerSnap.data['seller']}");
 
                         return GridView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 120,
+                                maxCrossAxisExtent: 150,
                                 childAspectRatio: 1 / 1,
                                 // mainAxisSpacing: 0
                             ),
@@ -187,7 +255,7 @@ class _ProductViewerState extends State<ProductViewer> {
                 ),
               ),
 
-              /// return to service button
+              /// return to service BUTTON
               GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
@@ -214,15 +282,15 @@ class _ProductViewerState extends State<ProductViewer> {
                   child: Text(
                     "${widget.prodSrvcName}",
                     style: TextStyle(
-                      color: _isSelected ? Colors.white : Colors.white,
-                      fontSize: 16,
+                      color: _isSelected ? Colors.black54 : Colors.white,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600
                     ),
                   ),
                 )
               ),
 
-              /// recently viewed banner
+              /// recently viewed BANNER
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white70,
@@ -257,28 +325,44 @@ class _ProductViewerState extends State<ProductViewer> {
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  // future: _firebaseServices.servicesRef.doc(document.id).get(),
-                  decoration: BoxDecoration(
-                    color: _isSelected ? Colors.amberAccent : Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  // height: _isSelected ? 300 : 55,
-                  height: _isSelected ? 350 : 65,
-                  // width: double.infinity,
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(
-                    top: 20,
-                    right: 14,
-                    bottom: 24,
-                    left: 14,
-                  ),
-                  child: Text(
-                    "${widget.prodName}",
-                    style: TextStyle(
-                        color: _isSelected ? Colors.black : Colors.black54,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isSelected = true;
+                      print("selected");
+                    });
+
+                    /*Navigator.push(context, MaterialPageRoute(
+                        builder: (context) =>
+                            SelectedServicePage(
+                              serviceID: "${widget.prodSrvcID}",
+                            )
+                    ));*/
+                  },
+                  child: Container(
+                    // future: _firebaseServices.servicesRef.doc(document.id).get(),
+                    decoration: BoxDecoration(
+                      color: _isSelected ? Colors.amberAccent : Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    // height: _isSelected ? 300 : 55,
+                    height: _isSelected ? 350 : 65,
+                    // width: double.infinity,
+                    alignment: Alignment.center,
+
+                    margin: EdgeInsets.only(
+                      top: 20,
+                      right: 14,
+                      bottom: 24,
+                      left: 14,
+                    ),
+                    child: Text(
+                      "${widget.prodName}",
+                      style: TextStyle(
+                          color: _isSelected ? Colors.black : Colors.black54,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600
+                      ),
                     ),
                   ),
                 ),

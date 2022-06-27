@@ -8,7 +8,7 @@ import 'package:odm_ui/widgets/action_bar.dart';
 class HomeTab extends StatelessWidget {
   FirebaseServices _firebaseServices = FirebaseServices();
   // HomeTab({});
-
+  late List _srvcData;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,22 +17,38 @@ class HomeTab extends StatelessWidget {
           Center(
             child: Text("Home Tab"),
           ),
-          FutureBuilder<QuerySnapshot>(
-            future: _firebaseServices.servicesRef.get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
+          // FutureBuilder<QuerySnapshot>(
+          FutureBuilder(
+            future: _firebaseServices.servicesRef
+              // .doc()
+              // .snapshots()
+              .get()
+              // .get()
+              // .then((value) => value.docs
+              // .forEach((element) {
+              //   var docRef = element.id;
+              //   // docRef.update({'isSelected': false});
+              //   // print ("di: ${docRef}");
+              //   // _srvcData.add(docRef);
+              //   // print ("do: ${_srvcData}");
+              //   // return _srvcData;
+              // }))
+            ,
+            builder: (context, AsyncSnapshot acctSrvcSnap) {
+              int _totalItems = 0;
+              if (acctSrvcSnap.hasError) {
                 return Scaffold(
                   body: Center(
-                    child: Text("Error: ${snapshot.error}"),
+                    child: Text("Error: ${acctSrvcSnap.error}"),
                   ),
                 );
               }
 
               // collection data to display
-              if(snapshot.connectionState == ConnectionState.done) {
+              if(acctSrvcSnap.connectionState == ConnectionState.done) {
                 // display data in listview
-                if (snapshot.hasData) {
-                  return ListView(
+                if (acctSrvcSnap.hasData) {
+                  /*return ListView(
                     padding: EdgeInsets.only(
                       top: 120,
                       bottom: 24,
@@ -51,7 +67,7 @@ class HomeTab extends StatelessWidget {
                         child: Card(
                           elevation: 3,
                           margin: EdgeInsets.symmetric(
-                            vertical: 8,
+                            vertical: 16,
                             horizontal: 16,
                           ),
                           child: Stack(
@@ -77,7 +93,9 @@ class HomeTab extends StatelessWidget {
                                       document['name'],
                                       style: Constants.regHeading,
                                     ),
-                                    Text(
+                                    */
+
+                  /*Text(
                                       // for price use statement below for added
                                       // dollar sign to register.
                                       // "\$${document.data()['price']}"
@@ -89,7 +107,9 @@ class HomeTab extends StatelessWidget {
                                               .accentColor,
                                           fontWeight: FontWeight.w600
                                       ),
-                                    ),
+                                    ),*/
+
+                  /*
                                   ],
                                 ),
                               )
@@ -98,8 +118,76 @@ class HomeTab extends StatelessWidget {
                         ),
                       );
                     }).toList(),
+                  );*/
+
+                  List _srvcData = acctSrvcSnap.data!.docs;
+                  // print ("srvc: ${acctSrvcSnap.data['name']}");
+                  _totalItems = _srvcData.length;
+                  print ("$_totalItems & ${_srvcData[1].id}");
+
+                  return GridView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 150,
+                        childAspectRatio: 1 / 1,
+                        // mainAxisSpacing: 0
+                      ),
+                      itemCount: _srvcData.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return StreamBuilder(
+                          stream: _firebaseServices.sellersRef
+                              .doc("${_srvcData[index].id}")
+                              .snapshots(),
+                          builder: (context, AsyncSnapshot sellerSnap) {
+
+                            if(sellerSnap.connectionState == ConnectionState.active) {
+                              if(sellerSnap.hasData) {
+                                // print("ID: ${sellerSnap.data.id} \n Name: ${sellerSnap.data['name']}");
+                                print("ID: ${sellerSnap.data!.id}");
+
+
+
+                                // return ProductWndw(
+                                //   sellerID: "${sellerSnap.data['sellerID']}",
+                                //   sellerName: "${sellerSnap.data['name']}",
+                                //   sellerLogo: "${sellerSnap.data['logo']}",
+                                //   prodQty: "${sellerSnap.data['inStockQty']}",
+                                //   prodID: "${widget.prodID}",
+                                //   prodName: "${widget.prodName}",
+                                //   isSelected: sellerSnap.data['hasItem'],
+                                // );
+
+
+                                // print ("srvc: ${sellerSnap}");
+                                return Center(
+                                  child: Text(
+                                    "${sellerSnap.data!.id}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                    ),
+
+                                  ),
+                                );
+
+                              }
+
+                            }
+
+                            return Scaffold(
+                              body: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          },
+                        );
+                      }
                   );
+
                 }
+
               }
 
               return Scaffold(

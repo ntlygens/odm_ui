@@ -4,9 +4,9 @@ import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/screens/register_page.dart';
 import 'package:odm_ui/widgets/custom_btn.dart';
 import 'package:odm_ui/widgets/custom_input.dart';
+import 'package:odm_ui/widgets/device_detect.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -101,87 +101,92 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isTablet = DeviceDetect().getDeviceType();
+
     return Scaffold(
       // resolves the renderflex overflow issue
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: 24,
-                ),
-                child: Text(
-                  "Welcome User \nLogin to your account",
-                  textAlign: TextAlign.center,
-                  style: Constants.boldHeading,
-                ),
-              ),
-              Column(
-                children: [
-                  CustomInput(
-                    hintText: "Email@example.com",
-                    onChanged: (value) {
-                      _loginEmail = value;
-                    },
-                    onSubmitted: (value) {
-                      _passwordFocusNode.requestFocus();
-                    },
-                    textInputAction: TextInputAction.next,
+        child: Center(
+          child: Container(
+            width: _isTablet ? 600 : double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  // alignment: Alignment.center,
+                  padding: EdgeInsets.only(
+                    top: 24,
                   ),
-                  CustomInput(
-                    hintText: "Password",
-                    onChanged: (value) {
-                      _loginPassword = value;
-                    },
-                    focusNode: _passwordFocusNode,
-                    isPasswordField: true,
-                    onSubmitted: (value) {
-                      _submitForm();
-                    },
+                  child: Text(
+                    "Welcome User \nLogin to your account",
+                    textAlign: TextAlign.center,
+                    style: Constants.boldHeading,
                   ),
-                  CustomBtn(
-                    dText: "Login",
+                ),
+                Column(
+                  children: [
+                    CustomInput(
+                      hintText: "Email@example.com",
+                      onChanged: (value) {
+                        _loginEmail = value;
+                      },
+                      onSubmitted: (value) {
+                        _passwordFocusNode.requestFocus();
+                      },
+                      textInputAction: TextInputAction.next,
+                    ),
+                    CustomInput(
+                      hintText: "Password",
+                      onChanged: (value) {
+                        _loginPassword = value;
+                      },
+                      focusNode: _passwordFocusNode,
+                      isPasswordField: true,
+                      onSubmitted: (value) {
+                        _submitForm();
+                      },
+                    ),
+                    CustomBtn(
+                      dText: "Login",
+                      onPressed: () {
+                        // _alertDialogBuilder();
+                        _submitForm();
+                        /*setState(() {
+                          _registerFormLoading = true;
+                        });*/
+                        print("clicked the Login Btn");
+
+                      },
+                      isLoading: _loginFormLoading,
+
+                      outlineBtn: false,
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    // top: 6,
+                    bottom: 16,
+                  ),
+                  child: CustomBtn(
+                    dText: "Create New Account",
                     onPressed: () {
-                      // _alertDialogBuilder();
-                      _submitForm();
-                      /*setState(() {
-                        _registerFormLoading = true;
-                      });*/
-                      print("clicked the Login Btn");
-
+                      // WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterPage()
+                        ),
+                      );
+                      // });
+                      print ("clicked the create act btn");
                     },
-                    isLoading: _loginFormLoading,
-
-                    outlineBtn: false,
+                    outlineBtn: true,
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  // top: 6,
-                  bottom: 16,
                 ),
-                child: CustomBtn(
-                  dText: "Create New Account",
-                  onPressed: () {
-                    // WidgetsBinding.instance!.addPostFrameCallback((_) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RegisterPage()
-                      ),
-                    );
-                    // });
-                    print ("clicked the create act btn");
-                  },
-                  outlineBtn: true,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

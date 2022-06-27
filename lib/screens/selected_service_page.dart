@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/service_products_page.dart';
@@ -111,13 +113,13 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                         ),
                                         alignment: Alignment.center,
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
+                                        /// original
                                         child: IconButton(
                                           onPressed: () {
                                             _firebaseServices.productsRef
                                                 .get()
-                                                .then(
-                                                  (value) => value.docs.forEach(
-                                                    (element) {
+                                                .then((value) => value.docs
+                                                .forEach((element) {
                                                   var docRef = _firebaseServices.productsRef
                                                       .doc(element.id);
 
@@ -128,6 +130,30 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                           },
                                           icon: Icon(Icons.done),
                                         ),
+                                        /// ** //
+
+                                        /*child: IconButton(
+                                          onPressed: () {
+                                            Query dSellers = _firebaseServices.productsRef
+                                              *//*.where("type",
+                                                isNull: true,
+                                                // isEqualTo: false
+                                                // arrayContains: ""
+                                                )*/
+                                        /*
+                                                .orderBy("seller")
+                                            ;
+                                            dSellers.get()
+                                              .then((value) => value.docs
+                                                .forEach((element) {
+                                                  // if(element.exists)
+                                                    print("el: ${element['name']}");
+                                                  // print("el: ${docRef}");
+                                                }));
+
+                                          },
+                                          icon: Icon(Icons.done),
+                                        ),*/
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
                                         /*child: Image(
                                           image: AssetImage(

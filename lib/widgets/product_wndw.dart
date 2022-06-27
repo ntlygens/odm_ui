@@ -45,7 +45,7 @@ class _ProductWndwState extends State<ProductWndw> {
           image: DecorationImage(
               image: widget.isSelected
                   ? NetworkImage("${widget.sellerLogo}")
-                  : NetworkImage("uri"),
+                  : AssetImage("assets/images/empty_symbol.png") as ImageProvider,
               fit: BoxFit.contain
           ),
         ),
@@ -54,7 +54,10 @@ class _ProductWndwState extends State<ProductWndw> {
         /// animated container
         Container(
           child: GestureDetector(
-            onTap: () { _updateState(); print(" tapped on ${widget.sellerName} = ${_isSelected}"); },
+            onTap: () {
+              _updateState();
+              print(" tapped on ${widget.sellerName} = ${_isSelected}");
+            },
             child: AnimatedContainer(
               duration: Duration(
                   milliseconds: 400
@@ -66,7 +69,7 @@ class _ProductWndwState extends State<ProductWndw> {
                 color: widget.isSelected
                     ? Colors.transparent
                     // ? Theme.of(context).accentColor
-                    : Color(0xFFDCDCDC),
+                    : Color(0xA65A5A5A),
                 border: Border.all(
                     color: Colors.black38,
                     width: 3,
@@ -92,8 +95,8 @@ class _ProductWndwState extends State<ProductWndw> {
             style: TextStyle(
               fontWeight: FontWeight.w600,
               color: widget.isSelected
-                  ? Colors.white
-                  : Colors.black,
+                  ? Colors.black
+                  : Colors.white,
               fontSize: 16,
             ),
           ),
