@@ -10,7 +10,7 @@ class ProductWndw extends StatefulWidget {
   final bool isSelected;
   final List? prodSeller;
 
-  const ProductWndw({Key? key, required this.prodName, this.prodSeller, required this.prodID, required this.isSelected, required this.sellerID, this.sellerName, this.sellerLogo, this.prodQty});
+  const ProductWndw({Key? key, this.prodName, this.prodSeller, this.prodID, required this.isSelected, required this.sellerID, this.sellerName, this.sellerLogo, this.prodQty});
 
   @override
   _ProductWndwState createState() => _ProductWndwState();

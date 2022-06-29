@@ -4,6 +4,7 @@ import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/screens/selected_service_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 import 'package:odm_ui/widgets/action_bar.dart';
+import 'package:odm_ui/widgets/product_wndw.dart';
 
 class HomeTab extends StatelessWidget {
   FirebaseServices _firebaseServices = FirebaseServices();
@@ -48,82 +49,10 @@ class HomeTab extends StatelessWidget {
               if(acctSrvcSnap.connectionState == ConnectionState.done) {
                 // display data in listview
                 if (acctSrvcSnap.hasData) {
-                  /*return ListView(
-                    padding: EdgeInsets.only(
-                      top: 120,
-                      bottom: 24,
-                    ),
-                    children: snapshot.data!.docs.map((document) {
-                      return GestureDetector(
-                        onTap: () {
-                          // print("srvcID: ${document.id}");
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) =>
-                                  SelectedServicePage(
-                                      serviceID: document.id
-                                  )
-                          ));
-                        },
-                        child: Card(
-                          elevation: 3,
-                          margin: EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 16,
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: Image.network(
-                                    "${document['images'][0]}",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 16,
-                                left: 20,
-                                right: 20,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: [
-                                    Text(
-                                      document['name'],
-                                      style: Constants.regHeading,
-                                    ),
-                                    */
-
-                  /*Text(
-                                      // for price use statement below for added
-                                      // dollar sign to register.
-                                      // "\$${document.data()['price']}"
-                                      document['type'][0],
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor,
-                                          fontWeight: FontWeight.w600
-                                      ),
-                                    ),*/
-
-                  /*
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );*/
-
                   List _srvcData = acctSrvcSnap.data!.docs;
                   // print ("srvc: ${acctSrvcSnap.data['name']}");
                   _totalItems = _srvcData.length;
-                  print ("$_totalItems & ${_srvcData[1].id}");
+                  print ("$_totalItems & ${_srvcData[1]['name']}");
 
                   return GridView.builder(
                       shrinkWrap: true,
@@ -137,40 +66,43 @@ class HomeTab extends StatelessWidget {
                       itemBuilder: (BuildContext ctx, index) {
                         return StreamBuilder(
                           stream: _firebaseServices.sellersRef
-                              .doc("${_srvcData[index].id}")
+                              .doc()
+                              // .doc("${_srvcData[index].id}")
                               .snapshots(),
-                          builder: (context, AsyncSnapshot sellerSnap) {
+                          builder: (context, AsyncSnapshot srvcsSnap) {
 
-                            if(sellerSnap.connectionState == ConnectionState.active) {
-                              if(sellerSnap.hasData) {
-                                // print("ID: ${sellerSnap.data.id} \n Name: ${sellerSnap.data['name']}");
-                                print("ID: ${sellerSnap.data!.id}");
+                            if(srvcsSnap.connectionState == ConnectionState.active) {
+                              if(srvcsSnap.hasData) {
+                                // print("ID: ${srvcsSnap.data.id} \n Name: ${srvcsSnap.data['name']}");
+                                // print("ID: ${srvcsSnap.data!.id}");
+                                print("ID: ${_srvcData[index]['name'] }");
 
-
-
-                                // return ProductWndw(
-                                //   sellerID: "${sellerSnap.data['sellerID']}",
-                                //   sellerName: "${sellerSnap.data['name']}",
-                                //   sellerLogo: "${sellerSnap.data['logo']}",
-                                //   prodQty: "${sellerSnap.data['inStockQty']}",
-                                //   prodID: "${widget.prodID}",
-                                //   prodName: "${widget.prodName}",
-                                //   isSelected: sellerSnap.data['hasItem'],
-                                // );
-
-
-                                // print ("srvc: ${sellerSnap}");
-                                return Center(
-                                  child: Text(
-                                    "${sellerSnap.data!.id}",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-
-                                  ),
+                                return ProductWndw(
+                                  sellerID: "${_srvcData[index].id}",
+                                  sellerName: "${_srvcData[index]['name']}",
+                                  sellerLogo: "${_srvcData[index]['images'][0]}",
+                                  prodID: "${_srvcData[index].id}",
+                                  prodName: "${_srvcData[index]['name']}",
+                                  isSelected: true,
                                 );
+
+
+                                // print ("srvc: ${srvcsSnap}");
+
+                                // return SelectedServicePage(serviceID: srvcsSnap.data!.id);
+
+
+                                // return Center(
+                                //   child: Text(
+                                //     "${srvcsSnap.data!.id}",
+                                //     style: TextStyle(
+                                //       fontSize: 16,
+                                //       fontWeight: FontWeight.w600,
+                                //       color: Colors.black,
+                                //     ),
+                                //
+                                //   ),
+                                // );
 
                               }
 
