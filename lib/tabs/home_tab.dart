@@ -19,31 +19,22 @@ class HomeTab extends StatelessWidget {
             child: Text("Home Tab"),
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 750,
+                  width: 675,
+                  height: 600,
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Color(0xFFDCDCEF),
+                    borderRadius: BorderRadius.circular(12)
                   ),
                   child: FutureBuilder(
                     future: _firebaseServices.servicesRef
-                    // .doc()
-                    // .snapshots()
-                        .get()
-                    // .get()
-                    // .then((value) => value.docs
-                    // .forEach((element) {
-                    //   var docRef = element.id;
-                    //   // docRef.update({'isSelected': false});
-                    //   // print ("di: ${docRef}");
-                    //   // _srvcData.add(docRef);
-                    //   // print ("do: ${_srvcData}");
-                    //   // return _srvcData;
-                    // }))
-                    ,
+                      .get(),
                     builder: (context, AsyncSnapshot acctSrvcSnap) {
                       int _totalItems = 0;
                       if (acctSrvcSnap.hasError) {
@@ -67,7 +58,7 @@ class HomeTab extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 150,
+                                maxCrossAxisExtent: 200,
                                 childAspectRatio: 1 / 1,
                                 // mainAxisSpacing: 0
                               ),
