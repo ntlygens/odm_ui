@@ -32,10 +32,10 @@ class HomeTab extends StatelessWidget {
                     color: Color(0xFFDCDCEF),
                     borderRadius: BorderRadius.circular(12)
                   ),
-                  child: FutureBuilder(
+                  child: FutureBuilder<QuerySnapshot>(
                     future: _firebaseServices.servicesRef
                       .get(),
-                    builder: (context, AsyncSnapshot acctSrvcSnap) {
+                    builder: (context, acctSrvcSnap) {
                       int _totalItems = 0;
                       if (acctSrvcSnap.hasError) {
                         return Scaffold(
@@ -50,11 +50,70 @@ class HomeTab extends StatelessWidget {
                         // display data in listview
                         if (acctSrvcSnap.hasData) {
                           List _srvcData = acctSrvcSnap.data!.docs;
-                          // print ("srvc: ${acctSrvcSnap.data['name']}");
-                          _totalItems = _srvcData.length;
-                          print ("$_totalItems & ${_srvcData[1]['name']}");
 
                           return GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 200,
+                                childAspectRatio: 1 / 1
+                            ),
+                            itemCount: _srvcData.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: (){
+                                  print("eDOc: ${_srvcData[index]['name']}");
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectedServicePage(
+                                              serviceID: _srvcData[index].id
+                                          )
+                                  ));
+                                },
+                                child: Card(
+                                  elevation: 3,
+                                  margin: EdgeInsets.symmetric(
+                                    vertical: 8,
+                                    horizontal: 16,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(6),
+                                          child: Image.network(
+                                            "${_srvcData[index]['images'][0]}",
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 16,
+                                        left: 20,
+                                        child: Text(
+                                              _srvcData[index]['name'],
+                                              style: Constants.regHeading,
+                                            ),
+
+                                        ),
+                                    ],
+                                  ),
+                                ),
+
+                              );
+                            },
+                          );
+                          
+                          
+                          // acctSrvcSnap.data!.docs.map((eDoc) {
+                          //   // print ("${eDoc['name'] + 'edoc' }" );
+                          //  
+                          // });
+                          // print ("srvc: ${acctSrvcSnap.data['name']}");
+                          // _totalItems = _srvcData.length;
+                          // print ("$_totalItems & ${_srvcData[1]['name']}");
+
+                          /*return GridView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -115,7 +174,7 @@ class HomeTab extends StatelessWidget {
                                   },
                                 );
                               }
-                          );
+                          );*/
 
                         }
 
