@@ -22,17 +22,17 @@ class ActionBar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: _hasBackground ? LinearGradient(
-          colors: [
-            Colors.white,
-            Colors.white.withOpacity(0),
-          ],
-          begin: Alignment(0, 0),
-          end: Alignment(0, 1)
-        ) : null
+        // gradient: _hasBackground ? LinearGradient(
+        //   colors: [
+        //     Colors.white,
+        //     Colors.white.withOpacity(0),
+        //   ],
+        //   begin: Alignment(0, 0),
+        //   end: Alignment(0, 1)
+        // ) : null
       ),
       padding: EdgeInsets.only(
-        top: 56,
+        top: 40,
         left: 24,
         right: 24,
         bottom: 24

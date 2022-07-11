@@ -27,10 +27,14 @@ class HomeTab extends StatelessWidget {
                 Container(
                   width: 675,
                   height: 600,
-                  padding: EdgeInsets.all(12),
+                  padding: EdgeInsets.symmetric(
+                      // 8,
+                    vertical: 16,
+                    horizontal: 8
+                  ),
                   decoration: BoxDecoration(
-                    color: Color(0xFFDCDCEF),
-                    borderRadius: BorderRadius.circular(12)
+                    color: Color(0xFFEFEFEF),
+                    borderRadius: BorderRadius.circular(8)
                   ),
                   child: FutureBuilder<QuerySnapshot>(
                     future: _firebaseServices.servicesRef
@@ -53,32 +57,40 @@ class HomeTab extends StatelessWidget {
 
                           return GridView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: ScrollPhysics() ,
                             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                                childAspectRatio: 1 / 1
+                                maxCrossAxisExtent: 325,
+                                childAspectRatio: 2 / 1
                             ),
                             itemCount: _srvcData.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: (){
-                                  print("eDOc: ${_srvcData[index]['name']}");
+                                  // print("eDOc: ${_srvcData[index]['name']}");
                                   Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) =>
-                                          SelectedServicePage(
-                                              serviceID: _srvcData[index].id
-                                          )
+                                      builder:
+                                          (BuildContext context) {
+                                            return Container(
+                                              child: SelectedServicePage(
+                                                  serviceID: _srvcData[index].id
+                                              ),
+                                            );
+
+                                          }
+
                                   ));
                                 },
                                 child: Card(
                                   elevation: 3,
                                   margin: EdgeInsets.symmetric(
+                                    // 8
                                     vertical: 8,
-                                    horizontal: 16,
+                                    horizontal: 10,
                                   ),
                                   child: Stack(
                                     children: [
                                       Container(
+                                        alignment: Alignment.center,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(6),
                                           child: Image.network(
@@ -87,15 +99,6 @@ class HomeTab extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        bottom: 16,
-                                        left: 20,
-                                        child: Text(
-                                              _srvcData[index]['name'],
-                                              style: Constants.regHeading,
-                                            ),
-
-                                        ),
                                     ],
                                   ),
                                 ),
@@ -103,78 +106,6 @@ class HomeTab extends StatelessWidget {
                               );
                             },
                           );
-                          
-                          
-                          // acctSrvcSnap.data!.docs.map((eDoc) {
-                          //   // print ("${eDoc['name'] + 'edoc' }" );
-                          //  
-                          // });
-                          // print ("srvc: ${acctSrvcSnap.data['name']}");
-                          // _totalItems = _srvcData.length;
-                          // print ("$_totalItems & ${_srvcData[1]['name']}");
-
-                          /*return GridView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 200,
-                                childAspectRatio: 1 / 1,
-                                // mainAxisSpacing: 0
-                              ),
-                              itemCount: _srvcData.length,
-                              itemBuilder: (BuildContext ctx, index) {
-                                return StreamBuilder(
-                                  stream: _firebaseServices.sellersRef
-                                      .doc()
-                                  // .doc("${_srvcData[index].id}")
-                                      .snapshots(),
-                                  builder: (context, AsyncSnapshot srvcsSnap) {
-
-                                    if(srvcsSnap.connectionState == ConnectionState.active) {
-                                      if(srvcsSnap.hasData) {
-                                        // print("ID: ${srvcsSnap.data.id} \n Name: ${srvcsSnap.data['name']}");
-                                        // print("ID: ${srvcsSnap.data!.id}");
-                                        print("ID: ${_srvcData[index]['name'] }");
-
-                                        return ProductWndw(
-                                          sellerID: "${_srvcData[index].id}",
-                                          sellerName: "${_srvcData[index]['name']}",
-                                          sellerLogo: "${_srvcData[index]['images'][0]}",
-                                          prodID: "${_srvcData[index].id}",
-                                          prodName: "${_srvcData[index]['name']}",
-                                          isSelected: true,
-                                        );
-
-                                        // print ("srvc: ${srvcsSnap}");
-
-                                        // return SelectedServicePage(serviceID: srvcsSnap.data!.id);
-
-
-                                        // return Center(
-                                        //   child: Text(
-                                        //     "${srvcsSnap.data!.id}",
-                                        //     style: TextStyle(
-                                        //       fontSize: 16,
-                                        //       fontWeight: FontWeight.w600,
-                                        //       color: Colors.black,
-                                        //     ),
-                                        //
-                                        //   ),
-                                        // );
-
-                                      }
-
-                                    }
-
-                                    return Scaffold(
-                                      body: Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }
-                          );*/
 
                         }
 

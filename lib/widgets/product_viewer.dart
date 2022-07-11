@@ -183,11 +183,11 @@ class _ProductViewerState extends State<ProductViewer> {
                 // height: 400,
                 // margin: EdgeInsets.only(top: 0),
                 padding: EdgeInsets.all(16),
-                child: FutureBuilder(
+                child: StreamBuilder(
                   // future: _getProductSellers(),
-                  future:_firebaseServices.productsRef
+                  stream:_firebaseServices.productsRef
                   .doc(widget.prodID)
-                  .get(),
+                  .snapshots(),
                   builder: (context, AsyncSnapshot prodSellerSnap) {
                     if (prodSellerSnap.hasError){
                       return Container(
@@ -195,11 +195,13 @@ class _ProductViewerState extends State<ProductViewer> {
                       );
                     }
 
-                    if(prodSellerSnap.connectionState == ConnectionState.done) {
+                    if(prodSellerSnap.connectionState == ConnectionState.active) {
                       if(prodSellerSnap.hasData) {
-                        List _sellerData = prodSellerSnap.data['seller'];
-                        print("product: ${prodSellerSnap.data['name']}");
-                        /// print("sellers: ${prodSellerSnap.data['seller']}");
+                        List _sellerData = prodSellerSnap.data!['seller'];
+                        // var _sellerData = prodSellerSnap.data!['desc'];
+                        // print ("${prodSellerSnap.data!['seller']} is the srvc");
+                        // print("product: ${prodSellerSnap.data!['name']}");
+                        print("sellers: ${_sellerData}");
 
                         return GridView.builder(
                             shrinkWrap: true,
