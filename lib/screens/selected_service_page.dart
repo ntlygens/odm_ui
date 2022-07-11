@@ -23,6 +23,37 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
 
   final _snackBar = SnackBar(content: Text("Product added to Cart"));
 
+  Future _removeAllServiceProducts() async {
+    return _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserID())
+        .collection("SelectedService")
+        .get()
+        .then((snapshot) => {
+          for (DocumentSnapshot ds in snapshot.docs){
+              ds.reference.delete()
+          },
+
+          // snapshot.forEach((doc) => {
+          //   doc.ref.delete()
+          // })
+          print(" all products removed!")
+        });
+  }
+
+  Future _unselectICons(value) async {
+    return _firebaseServices.productsRef
+        .get()
+        .then((value) => value.docs
+        .forEach((element) {
+          var docRef = _firebaseServices.productsRef
+              .doc(element.id);
+
+              docRef.update({'isSelected': false});
+          },
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool _alreadySelected = true;
@@ -115,7 +146,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
                                         /// original
                                         child: IconButton(
-                                          onPressed: () {
+                                          /*onPressed: () {
                                             _firebaseServices.productsRef
                                                 .get()
                                                 .then((value) => value.docs
@@ -127,6 +158,11 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                                 },
                                               ),
                                             );
+                                          },*/
+
+                                          onPressed: () {
+                                            _unselectICons(snapshot.data!.id);
+                                            _removeAllServiceProducts();
                                           },
                                           icon: Icon(Icons.done),
                                         ),
