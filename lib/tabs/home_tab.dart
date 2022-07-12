@@ -10,6 +10,25 @@ class HomeTab extends StatelessWidget {
   FirebaseServices _firebaseServices = FirebaseServices();
   // HomeTab({});
   late List _srvcData;
+  String? _textVar;
+
+
+  Future _dsplySrvc(value) async {
+    _textVar = value;
+    print("it is: ${_textVar}");
+    return await _textVar;
+    /*return _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserID())
+        .collection("SelectedService")
+        .doc(value)
+        .delete()
+        .then((_) {
+      print("product ${value} removed");
+      // _refreshServiceProduct();
+    });*/
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +46,7 @@ class HomeTab extends StatelessWidget {
                 Container(
                   width: 675,
                   height: 600,
-                  padding: EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric (
                       // 8,
                     vertical: 16,
                     horizontal: 8
@@ -59,15 +78,17 @@ class HomeTab extends StatelessWidget {
                             shrinkWrap: true,
                             physics: ScrollPhysics() ,
                             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 325,
+                                maxCrossAxisExtent: 300,
                                 childAspectRatio: 2 / 1
                             ),
                             itemCount: _srvcData.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
-                                onTap: (){
-                                  // print("eDOc: ${_srvcData[index]['name']}");
-                                  Navigator.push(context, MaterialPageRoute(
+                                onTap: () {
+                                  print("eDOc: ${_srvcData[index]['name']}");
+
+                                  /// ***** ///
+                                  /*Navigator.push(context, MaterialPageRoute(
                                       builder:
                                           (BuildContext context) {
                                             return Container(
@@ -75,17 +96,20 @@ class HomeTab extends StatelessWidget {
                                                   serviceID: _srvcData[index].id
                                               ),
                                             );
-
                                           }
 
                                   ));
+                                },*/
+                                  /// ***** ///
+
+                                  _dsplySrvc(_srvcData[index]['name']);
                                 },
                                 child: Card(
-                                  elevation: 3,
+                                  elevation: 4,
                                   margin: EdgeInsets.symmetric(
                                     // 8
                                     vertical: 8,
-                                    horizontal: 10,
+                                    horizontal: 12,
                                   ),
                                   child: Stack(
                                     children: [
@@ -121,10 +145,21 @@ class HomeTab extends StatelessWidget {
                   ),
                 ),
                 Container(
+                  width: 650,
+                  height: 600,
+                  padding: EdgeInsets.symmetric(
+                    // 8,
+                      vertical: 16,
+                      horizontal: 8
+                  ),
+                  decoration: BoxDecoration(
+                      color: Color(0xFFEFEFEF),
+                      borderRadius: BorderRadius.circular(8)
+                  ),
                   alignment: Alignment.center,
                   margin: EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 10
+                      vertical: 0,
+                      horizontal: 0
                   ),
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.center,
@@ -147,7 +182,7 @@ class HomeTab extends StatelessWidget {
                         ),
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Text(
-                          "text goes here",
+                          "${_textVar}",
                           style: TextStyle(
                             fontSize: 28,
                           ),

@@ -206,7 +206,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                           onTap: () async {
                                             // await _addToCart();
                                             if(_alreadySelected == false) {
-                                              Scaffold.of(context).showSnackBar(_snackBar);
+                                              ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                                             }
 
                                             Navigator.push(context, MaterialPageRoute(
