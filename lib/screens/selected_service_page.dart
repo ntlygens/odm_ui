@@ -253,11 +253,11 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
 
                 }
             ),
-            ActionBar(
+            /*ActionBar(
               hasBackArrow: true,
               hasTitle: false,
               hasBackground: false,
-            )
+            )*/
           ],
         )
     );

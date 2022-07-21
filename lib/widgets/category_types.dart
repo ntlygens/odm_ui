@@ -26,12 +26,32 @@ class _CategoryTypesState extends State<CategoryTypes> {
   String _selectedSrvcCtgryName = "selected-service-name";
   String _selectedSrvcCtgryID = "selected-service-id";
 
+  late String _isCustomerService;
+
   FirebaseServices _firebaseServices = FirebaseServices();
 
   Future _selectServiceProduct() async {
     return _firebaseServices.usersRef
         .doc(_firebaseServices.getUserID())
         .collection("SelectedService")
+        .doc()
+        .set({
+          "prodName": _selectedProductName,
+          "prodID": _selectedProductID,
+          "srvcCtgry": _selectedSrvcCtgryName,
+          "srvcCtgryID": _selectedSrvcCtgryID,
+          "date": _firebaseServices.setDayAndTime(),
+        })
+        .then((_) {
+          print("Name: ${_selectedProductName} | ID: ${_selectedProductID} Selected");
+          _setProductIsSelected(_selectedProductID);
+        });
+  }
+
+  Future _selectCustomerService() async {
+    return _firebaseServices.customerSrvcsRef
+        .doc(_firebaseServices.getUserID())
+        .collection("CustomerServices")
         .doc()
         .set({
           "prodName": _selectedProductName,
@@ -56,6 +76,20 @@ class _CategoryTypesState extends State<CategoryTypes> {
         });
   }
 
+  Future _checkServiceType() async {
+    if( widget.categoryTypeList[0].data['srvcType'] == null)  {
+      print ('its product servcice');
+    }
+  }
+
+  @override
+  void initState() {
+    _isCustomerService = "VnhXnkWdbvbZcSm7duYF";
+    _checkServiceType();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // print("amt: ${widget.categoryTypeList.length}");
@@ -73,6 +107,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
               mainAxisSpacing: 10),
           itemCount: widget.categoryTypeList.length,
           itemBuilder: (BuildContext ctx, index) {
+            // if(widget.categoryTypeList.isEmpty){};
             return StreamBuilder(
               stream: _firebaseServices.productsRef
                   .doc("${widget.categoryTypeList[index]}")
