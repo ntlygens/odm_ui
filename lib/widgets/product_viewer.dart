@@ -258,7 +258,7 @@ class _ProductViewerState extends State<ProductViewer> {
               ),
 
               /// return to service BUTTON
-              GestureDetector(
+              /*GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) =>
@@ -290,7 +290,7 @@ class _ProductViewerState extends State<ProductViewer> {
                     ),
                   ),
                 )
-              ),
+              ),*/
 
               /// recently viewed BANNER
               Container(

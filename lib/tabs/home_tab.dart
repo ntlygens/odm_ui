@@ -18,6 +18,8 @@ class _HomeTabState extends State<HomeTab> {
 
   // HomeTab({});
   late List _srvcData;
+  late PageController _pageController;
+  int _selectedPage = 0;
 
   late String? _textVar;
   // var _textVar;
@@ -78,8 +80,15 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   void initState() {
+    _pageController = PageController();
     _textVar = "VnhXnkWdbvbZcSm7duYF";
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -187,8 +196,25 @@ class _HomeTabState extends State<HomeTab> {
                               vertical: 0,
                               horizontal: 0
                           ),
-                          child: SelectedServicePage(
-                            serviceID: "${_textVar}",
+                          child: Container(
+                            child: PageView(
+                              controller: _pageController,
+                              onPageChanged: (num) {
+                                setState(() {
+                                  _selectedPage = num;
+                                });
+                              },
+                              children: [
+                                SelectedServicePage(
+                                  serviceID: "${_textVar}",
+                                ),
+                                /*ProductWndw(
+                                    isSelected: isSelected,
+                                    sellerID: sellerID
+                                )*/
+
+                              ]
+                            ),
                           ),
 
                           /*child: Column(

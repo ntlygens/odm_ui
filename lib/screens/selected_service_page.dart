@@ -40,7 +40,51 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
         });
   }
 
-  Future _unselectICons(value) async {
+  Future _removeThisServiceProduct( prodID ) async {
+    return _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserID())
+        .collection("SelectedService")
+        .where('prodID', isEqualTo: prodID)
+        .get()
+        .then((snapshot) => {
+          // for (DocumentSnapshot ds in snapshot.docs){
+          //   ds.reference.delete()
+          // },
+          print(" current product removed!")
+        });
+  }
+
+  // async function getUserByEmail(email) {
+  //   // Make the initial query
+  //   const query = await db.collection('users').where('email', '==', email).get();
+  //
+  //   if (!query.empty) {
+  //     const snapshot = query.docs[0];
+  //     const data = snapshot.data();
+  //   } else {
+  //     // not found
+  //   }
+  //
+  // }
+
+  Future _unselectThisIcon(prodID) async {
+    return  _firebaseServices.usersRef
+        .doc(_firebaseServices.getUserID())
+        .collection("SelectedService")
+        .where('id', isEqualTo: prodID)
+        // .where('prodID', isEqualTo: prodID)
+        .get()
+        .then((snapshot) => {
+          for (DocumentSnapshot ds in snapshot.docs){
+            print("product unselected!")
+            // ds.reference.update({'isSelected': false})
+          },
+          // print("${snapshot.}product unselected!")
+        },
+    );
+  }
+
+  Future _unselectAllIcons(value) async {
     return _firebaseServices.productsRef
         .get()
         .then((value) => value.docs
@@ -136,7 +180,7 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                   child: Row(
                                     children: [
                                       Container(
-                                        width: 60,
+                                        width: 90,
                                         height: 60,
                                         decoration: BoxDecoration(
                                             color: Color(0xFFDCDCDC),
@@ -144,62 +188,17 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
                                         ),
                                         alignment: Alignment.center,
                                         /// ** // Reset DB Button Below IMPORTANT!!! //
-                                        /// original
                                         child: IconButton(
-                                          /*onPressed: () {
-                                            _firebaseServices.productsRef
-                                                .get()
-                                                .then((value) => value.docs
-                                                .forEach((element) {
-                                                  var docRef = _firebaseServices.productsRef
-                                                      .doc(element.id);
-
-                                                  docRef.update({'isSelected': false});
-                                                },
-                                              ),
-                                            );
-                                          },*/
-
                                           onPressed: () {
-                                            _unselectICons(snapshot.data!.id);
+                                            _unselectAllIcons(snapshot.data!.id);
                                             _removeAllServiceProducts();
                                           },
-                                          icon: Icon(Icons.done),
-                                        ),
-                                        /// ** //
-
-                                        /*child: IconButton(
-                                          onPressed: () {
-                                            Query dSellers = _firebaseServices.productsRef
-                                              *//*.where("type",
-                                                isNull: true,
-                                                // isEqualTo: false
-                                                // arrayContains: ""
-                                                )*/
-                                        /*
-                                                .orderBy("seller")
-                                            ;
-                                            dSellers.get()
-                                              .then((value) => value.docs
-                                                .forEach((element) {
-                                                  // if(element.exists)
-                                                    print("el: ${element['name']}");
-                                                  // print("el: ${docRef}");
-                                                }));
-
-                                          },
-                                          icon: Icon(Icons.done),
-                                        ),*/
-                                        /// ** // Reset DB Button Below IMPORTANT!!! //
-                                        /*child: Image(
-                                          image: AssetImage(
-                                            "assets/images/bookmark_icon.png",
+                                          icon: Icon(
+                                            Icons.delete,
+                                            size: 32.0,
                                           ),
-                                          fit: BoxFit.contain,
-                                          height: 22,
-                                          // width: 42
+                                        ),
 
-                                        ),*/
                                       ),
                                       Expanded(
                                         child: GestureDetector(

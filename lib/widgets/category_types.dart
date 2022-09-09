@@ -21,8 +21,8 @@ class CategoryTypes extends StatefulWidget {
 
 class _CategoryTypesState extends State<CategoryTypes> {
   String? _selectedProductName = "selected-product-name";
-  String _selectedProductID = "selected-produc-id";
-  String _selectedProductSrvcID = "selected-produc-service-id";
+  String _selectedProductID = "selected-product-id";
+  String _selectedProductSrvcID = "selected-product-service-id";
   String _selectedSrvcCtgryName = "selected-service-name";
   String _selectedSrvcCtgryID = "selected-service-id";
 
@@ -30,22 +30,43 @@ class _CategoryTypesState extends State<CategoryTypes> {
 
   FirebaseServices _firebaseServices = FirebaseServices();
 
-  Future _selectServiceProduct() async {
+  /*Future _isProductSelected(prodID) {
     return _firebaseServices.usersRef
         .doc(_firebaseServices.getUserID())
         .collection("SelectedService")
-        .doc()
-        .set({
-          "prodName": _selectedProductName,
-          "prodID": _selectedProductID,
-          "srvcCtgry": _selectedSrvcCtgryName,
-          "srvcCtgryID": _selectedSrvcCtgryID,
-          "date": _firebaseServices.setDayAndTime(),
-        })
-        .then((_) {
-          print("Name: ${_selectedProductName} | ID: ${_selectedProductID} Selected");
-          _setProductIsSelected(_selectedProductID);
+        .where('prodID', isEqualTo: prodID)
+        .get()
+        .then((snapshot) => {
+          for (DocumentSnapshot ds in snapshot.docs){
+            if(ds.reference.id == prodID ) {
+              print("${ds.reference.id } product!")
+            } else {
+              _selectServiceProduct()
+            }
+            // ds.reference.update({'isSelected': false})
+          },
         });
+
+    // return prod;
+      // print("${snapshot.}product unselected!")
+  }*/
+
+  Future _selectServiceProduct() async {
+      return _firebaseServices.usersRef
+          .doc(_firebaseServices.getUserID())
+          .collection("SelectedService")
+          .doc()
+          .set({
+        "prodName": _selectedProductName,
+        "prodID": _selectedProductID,
+        "srvcCtgry": _selectedSrvcCtgryName,
+        "srvcCtgryID": _selectedSrvcCtgryID,
+        "date": _firebaseServices.setDayAndTime(),
+      }).then((_) {
+        print(
+            "Name: ${_selectedProductName} | ID: ${_selectedProductID} Selected");
+        _setProductIsSelected(_selectedProductID);
+      });
   }
 
   Future _selectCustomerService() async {
@@ -76,6 +97,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
         });
   }
 
+  // Check if service type for product or customer before requesting data
   Future _checkServiceType() async {
     if( widget.categoryTypeList[0].data['srvcType'] == null)  {
       print ('its product servcice');
@@ -132,6 +154,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
 
                         // print("datentime: ${_firebaseServices.setDayAndTime()}");
 
+                        // await _isProductSelected(productSnap.data.id);
                         await _selectServiceProduct();
                         // await _setProductIsSelected(_selectedProductID);
 
