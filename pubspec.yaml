@@ -44,6 +44,11 @@ dependencies:
   # base git:
   google_fonts: ^2.1.0
 
+  # flutter_svg:
+  flutter_svg: ^0.22.0
+  fl_chart: ^0.35.0
+  provider: ^6.0.3
+
   # cloud firestore_ui:
   # base git: cloud_firestore: "^0.14.0+2"
   # cloud_firestore: "^0.14.1"

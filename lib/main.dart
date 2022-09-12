@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:odm_ui/controllers/menu_controller.dart';
 import 'package:odm_ui/screens/landing_page.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   // print('-- main');
@@ -30,6 +32,17 @@ class MyApp extends StatelessWidget {
             ),
       ),
       home: LandingPage(),
+
+      // TODO: Uncomment when sidemenu is added
+      // home: MultiProvider(
+      //     providers: [
+      //       ChangeNotifierProvider<MenuController>(
+      //         create: (context) => MenuController(),
+      //       )
+      //     ],
+      //     child: LandingPage(),
+      //
+      // )
     );
   }
 }
