@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1024532317222",
+    "firebase_url": "https://ondamenu-pos-default-rtdb.firebaseio.com",
     "project_id": "ondamenu-pos",
     "storage_bucket": "ondamenu-pos.appspot.com"
   },
@@ -29,6 +30,13 @@
             {
               "client_id": "1024532317222-qc3h0kt0qfu77jct3o0vtb9itgbcce5n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1024532317222-r7ft01ntg72a0q6k62lrlrhsh2oifaju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.odmUi"
+              }
             }
           ]
         }

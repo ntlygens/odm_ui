@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class MenuController extends ChangeNotifier {
@@ -9,8 +7,8 @@ class MenuController extends ChangeNotifier {
 
   void controlMenu() {
     // TODO: Uncomment when sidemenu is added
-    // if (!_scaffoldKey.currentState.isDrawerOpen) {
-    //   _scaffoldKey.currentState.openDrawer();
-    // }
+    if (!_scaffoldKey.currentState!.isDrawerOpen) {
+      _scaffoldKey.currentState!.openDrawer();
+    }
   }
 }
