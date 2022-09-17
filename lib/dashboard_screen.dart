@@ -64,45 +64,78 @@ class _DashboardScreenState extends State<DashboardScreen>{
                             child: Column(
                               children: [
                                 // SearchTab(),
+                                // ORIGINAL
+                                // if (Responsive.isMobile(context))
+                                  SizedBox(height: defaultPadding),
+                                // if (Responsive.isMobile(context))
+                                  /*Expanded(
+                                    flex: 5,
+                                    child: PageView(
+                                      controller: _tabsPageController,
+                                      onPageChanged: (num) {
+                                        setState(() {
+                                          _selectedTab = num;
+                                        });
+                                      },
+                                      children: [
+                                        HomeTab(),
+                                        ProfileTab(),
+                                        SearchTab(),
+                                      ],
+                                    ),
+                                  ),*/
+                                  BottomTabs(
+                                      selectedTab: _selectedTab,
+                                        tabClicked: (num) {
+                                          _tabsPageController.animateToPage(
+                                              num,
+                                              duration: Duration(milliseconds: 500),
+                                              curve: Curves.easeInOutCubic
+                                          );
+                                        }
+                                  ),
                                 if (Responsive.isMobile(context))
                                   SizedBox(height: defaultPadding),
                                 if (Responsive.isMobile(context))
                                   ShoppingCartTab(),
-
-
                               ],
                             ),
-                            // ORIGINAL
-                            // child: PageView(
-                            //   controller: _tabsPageController,
-                            //   onPageChanged: (num) {
-                            //     setState(() {
-                            //       _selectedTab = num;
-                            //     });
-                            //   },
-                            //   children: [
-                            //     HomeTab(),
-                            //     ProfileTab(),
-                            //     SearchTab(),
-                            //   ],
-                            // )
+
                         ),
-                        /*BottomTabs(
-                          selectedTab: _selectedTab,
-                          tabClicked: (num) {
-                            _tabsPageController.animateToPage(
-                                num,
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.easeInOutCubic
-                            );
-                          }
-                        ),*/
-                        SizedBox(width: defaultPadding),
                         if (!Responsive.isMobile(context))
-                          Expanded(
-                            flex: 2,
-                            child: ShoppingCartTab(),
-                          ),
+                          SizedBox(width: defaultPadding),
+                          // Expanded(
+                          //     flex: 5,
+                          //     child: PageView(
+                          //       controller: _tabsPageController,
+                          //       onPageChanged: (num) {
+                          //         setState(() {
+                          //           _selectedTab = num;
+                          //         });
+                          //       },
+                          //       children: [
+                          //         HomeTab(),
+                          //         ProfileTab(),
+                          //         SearchTab(),
+                          //       ],
+                          //     ),
+                          //   ),
+                          /*BottomTabs(
+                              selectedTab: _selectedTab,
+                              tabClicked: (num) {
+                                _tabsPageController.animateToPage(
+                                    num,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.easeInOutCubic
+                                );
+                              }
+                          ),*/
+                          // SizedBox(width: defaultPadding),
+                          if (!Responsive.isMobile(context))
+                            Expanded(
+                              flex: 2,
+                              child: ShoppingCartTab(),
+                            ),
 
                       ],
                     )

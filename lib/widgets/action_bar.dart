@@ -5,6 +5,8 @@ import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/screens/cart_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
 
+import 'package:odm_ui/responsive.dart';
+
 class ActionBar extends StatelessWidget {
   final String? title;
   final bool? hasBackArrow;
@@ -21,57 +23,38 @@ class ActionBar extends StatelessWidget {
     bool _hasBackground = hasBackground ?? true;
 
     return Container(
+      margin: EdgeInsets.only(left: defaultPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: defaultPadding,
+        vertical: defaultPadding / 2,
+      ),
       decoration: BoxDecoration(
-        // gradient: _hasBackground ? LinearGradient(
-        //   colors: [
-        //     Colors.white,
-        //     Colors.white.withOpacity(0),
-        //   ],
-        //   begin: Alignment(0, 0),
-        //   end: Alignment(0, 1)
-        // ) : null
+        color: secondaryColor,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.white12),
       ),
-      padding: EdgeInsets.only(
-        top: 40,
-        left: 24,
-        right: 24,
-        bottom: 24
-      ),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (_hasBackArrow)
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(8)
-                  ),
-                  child: Image(
-                    image: AssetImage(
-                        "assets/images/back_arrow.png"
-                    ),
-                  ),
-              ),
-            ),
-          if (_hasTitle)
+          Image.asset(
+            "images/baseline_shopping_cart_black_24dp@2x.png",
+            height: 21,
+          ),
+          if (!Responsive.isMobile(context) && _hasTitle)
             Text(
-              title ?? "Title here",
-              style: Constants.boldHeading,
+              title ?? "Title Here",
+              style: Constants.boldHeadingWhite,
             ),
+          Icon(Icons.keyboard_arrow_down),
 
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CartPage(),
-                  ));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => CartPage(),
+              //     ));
             },
             child: Container(
               width: 42,

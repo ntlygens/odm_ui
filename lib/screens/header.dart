@@ -34,9 +34,6 @@ class Header extends StatelessWidget {
 }
 
 class ProfileCard extends StatelessWidget {
-  // const ProfileCard({
-  //   Key key,
-  // }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

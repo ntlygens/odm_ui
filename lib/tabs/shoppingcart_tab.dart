@@ -16,43 +16,47 @@ class ShoppingCartTab extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child:
-          Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ActionBar(
-                  title: "Shopping Cart",
-                  hasTitle: true,
-                  hasBackArrow: false,
-                ),
-                Chart(),
-                SizedBox(height: defaultPadding),
-                StorageInfoCard(
-                  svgSrc: "icons/Documents.svg",
-                  title: "Documents Files",
-                  amountOfFiles: "1.3GB",
-                  numOfFiles: 1328,
-                ),
-                StorageInfoCard(
-                  svgSrc: "icons/media.svg",
-                  title: "Media Files",
-                  amountOfFiles: "15.3GB",
-                  numOfFiles: 1328,
-                ),
-                StorageInfoCard(
-                  svgSrc: "icons/folder.svg",
-                  title: "Other Files",
-                  amountOfFiles: "1.3GB",
-                  numOfFiles: 1328,
-                ),
-                StorageInfoCard(
-                  svgSrc: "icons/unknown.svg",
-                  title: "Unknown",
-                  amountOfFiles: "1.3GB",
-                  numOfFiles: 140,
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ActionBar(
+                    title: "Cart",
+                    hasTitle: true,
+                    hasBackArrow: false,
+                  ),
+                  SizedBox(height: defaultPadding),
+                  Chart(),
+                  SizedBox(height: defaultPadding),
+                ],
+              ),
+              StorageInfoCard(
+                svgSrc: "icons/Documents.svg",
+                title: "Documents Files",
+                amountOfFiles: "1.3GB",
+                numOfFiles: 1328,
+              ),
+              StorageInfoCard(
+                svgSrc: "icons/media.svg",
+                title: "Media Files",
+                amountOfFiles: "15.3GB",
+                numOfFiles: 1328,
+              ),
+              StorageInfoCard(
+                svgSrc: "icons/folder.svg",
+                title: "Other Files",
+                amountOfFiles: "1.3GB",
+                numOfFiles: 1328,
+              ),
+              StorageInfoCard(
+                svgSrc: "icons/unknown.svg",
+                title: "Unknown",
+                amountOfFiles: "1.3GB",
+                numOfFiles: 140,
+              ),
+            ],
           ),
     );
   }

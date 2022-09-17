@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Container(
               child: PageView(
-                controller: _tabsPageController,
+                 controller: _tabsPageController,
                 onPageChanged: (num) {
                   setState(() {
                     _selectedTab = num;
