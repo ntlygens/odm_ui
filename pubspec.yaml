@@ -10,7 +10,7 @@ version: 1.0.0+1
 environment:
   # original: sdk: ">=2.7.0 <3.0.0"
   # latest:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.12.0 <3.3.2"
 
 
 
@@ -32,8 +32,8 @@ dependencies:
 
   # original: firebase_auth: "^1.1.0"
   # latest:
-  firebase_auth: ">=3.1.0 <3.1.2"
-  firebase_auth_web: ^3.1.0
+  firebase_auth: ^3.10.0
+  firebase_auth_web: ^4.5.0
 
   http: ^0.13.4
   http_parser: ^4.0.0
@@ -42,11 +42,11 @@ dependencies:
   # google fonts
   # original: google_fonts: ^1.1.2
   # base git:
-  google_fonts: ^2.1.0
+  google_fonts: ^3.0.1
 
   # flutter_svg:
-  flutter_svg: ^0.22.0
-  fl_chart: ^0.35.0
+  flutter_svg: ^1.1.5
+  fl_chart: ^0.55.1
   provider: ^6.0.3
 
   # cloud firestore_ui:

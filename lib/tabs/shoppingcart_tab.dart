@@ -24,6 +24,7 @@ class ShoppingCartTab extends StatelessWidget {
                 children: [
                   ActionBar(
                     title: "Cart",
+                    hasIcon: true,
                     hasTitle: true,
                     hasBackArrow: false,
                   ),

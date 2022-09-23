@@ -208,65 +208,9 @@ class _HomeTabState extends State<HomeTab> {
                                 SelectedServicePage(
                                   serviceID: "${_textVar}",
                                 ),
-                                /*ProductWndw(
-                                    isSelected: isSelected,
-                                    sellerID: sellerID
-                                )*/
-
                               ]
                             ),
                           ),
-
-                          /*child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white70,
-                                  border: Border(
-                                    top: BorderSide(color: Colors.green),
-                                    bottom: BorderSide(color: Colors.green),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.only(
-                                    top: 100,
-                                    right: 48,
-                                    bottom: 0,
-                                    left: 48
-                                ),
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  "${_textVar}",
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white70,
-                                  border: Border(
-                                    top: BorderSide(color: Colors.green),
-                                    bottom: BorderSide(color: Colors.green),
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 15,
-                                    horizontal: 10
-                                ),
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  "text here",
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),*/
                         )
                       ],
                     );

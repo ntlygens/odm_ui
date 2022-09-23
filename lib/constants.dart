@@ -13,6 +13,18 @@ class Constants {
       color: Colors.black
   );
 
+  static const regHeadingWhite = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: Colors.white
+  );
+
+  static const serviceLabels = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.normal,
+      color: Colors.white
+  );
+
   static const boldHeading = TextStyle(
       fontSize: 22,
       fontWeight: FontWeight.w600,

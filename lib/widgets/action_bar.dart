@@ -12,8 +12,9 @@ class ActionBar extends StatelessWidget {
   final bool? hasBackArrow;
   final bool? hasTitle;
   final bool? hasBackground;
+  final bool? hasIcon;
 
-  ActionBar({ this.title, this.hasBackArrow, this.hasTitle, this.hasBackground });
+  ActionBar({ this.title, this.hasBackArrow, this.hasTitle, this.hasBackground, this.hasIcon });
   FirebaseServices _firebaseServices = FirebaseServices();
 
   @override
@@ -21,6 +22,7 @@ class ActionBar extends StatelessWidget {
     bool _hasBackArrow = hasBackArrow ?? false;
     bool _hasTitle = hasTitle ?? true;
     bool _hasBackground = hasBackground ?? true;
+    bool _hasIcon = hasIcon ?? false;
 
     return Container(
       margin: EdgeInsets.only(left: defaultPadding),
@@ -37,16 +39,20 @@ class ActionBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            "images/baseline_shopping_cart_black_24dp@2x.png",
-            height: 21,
-          ),
+          if (_hasIcon)
+            Image.asset(
+              "images/baseline_shopping_cart_black_24dp@2x.png",
+              height: 21,
+              width: 30,
+              fit: BoxFit.fitWidth,
+            ),
           if (!Responsive.isMobile(context) && _hasTitle)
             Text(
               title ?? "Title Here",
               style: Constants.boldHeadingWhite,
             ),
-          Icon(Icons.keyboard_arrow_down),
+          if (Responsive.isMobile(context))
+            Icon(Icons.keyboard_arrow_down),
 
           GestureDetector(
             onTap: () {
