@@ -53,6 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
             Expanded(
               flex: 5,
               child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.all(defaultPadding),
                 child: Column(
                   children: [
@@ -70,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
                                 // ShoppingCartTab(),
                                 // ProfileTab(),
                                 // HomeTab(),
-                                // ServicesList(),
+                                ServicesList(),
                                 // SizedBox(height: defaultPadding),
                                 // ServicesGridDetails(),
                                 /*PageView(

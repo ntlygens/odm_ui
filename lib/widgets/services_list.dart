@@ -89,7 +89,7 @@ class ServicesList extends StatelessWidget {
     // );
     return Column(
       children: [
-        /*Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -110,7 +110,6 @@ class ServicesList extends StatelessWidget {
           ],
         ),
         SizedBox(height: defaultPadding),
-        */
         Responsive(
             mobile: ServicesGridView(
               crossAxisCount: _size.width < 650 ? 2 : 4,
@@ -147,7 +146,7 @@ class ServicesGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: double.infinity,
+        // width: double.infinity,
         padding: EdgeInsets.all(defaultPadding),
         child: StreamBuilder<QuerySnapshot>(
             stream: _firebaseServices.servicesRef
@@ -166,7 +165,7 @@ class ServicesGridView extends StatelessWidget {
                 if (snapshot.hasData) {
                   _srvcData = snapshot.data!.docs;
                   if(Responsive.isDesktop(context))
-                    maxAxisExtent = 145;
+                    maxAxisExtent = 225;
                   if(Responsive.isTablet(context) && this.crossAxisCount == 3)
                     maxAxisExtent = 135;
                   if(Responsive.isMobile(context) && this.crossAxisCount == 4)
@@ -197,6 +196,7 @@ class ServicesGridView extends StatelessWidget {
                         child: Card(
                           elevation: 3,
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
                                 alignment: Alignment.center,

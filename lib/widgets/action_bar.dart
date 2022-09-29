@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/screens/cart_page.dart';
 import 'package:odm_ui/services/firebase_services.dart';
@@ -38,13 +39,16 @@ class ActionBar extends StatelessWidget {
 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisSize: MainAxisSize.min,
         children: [
           if (_hasIcon)
-            Image.asset(
-              "images/baseline_shopping_cart_black_24dp@2x.png",
-              height: 21,
+            SvgPicture.asset(
+              // "",
+              "assets/icons/shopping-cart.svg",
+              // scale: 1.5,
+              // height: 21,
               width: 30,
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.cover,
             ),
           if (!Responsive.isMobile(context) && _hasTitle)
             Text(

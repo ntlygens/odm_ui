@@ -12,46 +12,46 @@ class SideMenu extends StatelessWidget {
         child: Column(
           children: [
             DrawerHeader(
-              child: Image.asset("images/logo.png"),
+              child: Image.asset("assets/images/logo.png"),
             ),
             DrawerListTile(
               title: "Dashbord",
-              svgSrc: "icons/menu_dashbord.svg",
+              svgSrc: "assets/icons/menu_dashbord.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Transaction",
-              svgSrc: "icons/menu_tran.svg",
+              svgSrc: "assets/icons/menu_tran.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Task",
-              svgSrc: "icons/menu_task.svg",
+              svgSrc: "assets/icons/menu_task.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Documents",
-              svgSrc: "icons/menu_doc.svg",
+              svgSrc: "assets/icons/menu_doc.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Store",
-              svgSrc: "icons/menu_store.svg",
+              svgSrc: "assets/icons/menu_store.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Notification",
-              svgSrc: "icons/menu_notification.svg",
+              svgSrc: "assets/icons/menu_notification.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Profile",
-              svgSrc: "icons/menu_profile.svg",
+              svgSrc: "assets/icons/menu_profile.svg",
               press: () {},
             ),
             DrawerListTile(
               title: "Settings",
-              svgSrc: "icons/menu_setting.svg",
+              svgSrc: "assets/icons/menu_setting.svg",
               press: () {},
             ),
           ],
