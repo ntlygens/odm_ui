@@ -86,7 +86,7 @@ class BottomTabsBtn extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: _selected ? Theme.of(context).accentColor : Colors.transparent,
+              color: _selected ? Theme.of(context).colorScheme.secondary : Colors.transparent,
               width: 2
             )
           )

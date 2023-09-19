@@ -182,7 +182,7 @@ class _CategoryTypesState extends State<CategoryTypes> {
                         decoration: BoxDecoration(
                           color: productSnap.data['isSelected'] ? Theme
                               .of(context)
-                              .accentColor : Color(0xFFDCDCDC),
+                              .colorScheme.secondary : Color(0xFFDCDCDC),
                           borderRadius: BorderRadius.circular(8),
                         ),
 

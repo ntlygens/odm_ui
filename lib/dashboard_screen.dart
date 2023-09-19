@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odm_ui/constants.dart';
-import 'package:odm_ui/controllers/menu_controller.dart';
+// import 'package:odm_ui/controllers/menu_controller.dart';
 import 'package:odm_ui/responsive.dart';
 import 'package:odm_ui/screens/header.dart';
 import 'package:odm_ui/screens/service_products_page.dart';
@@ -43,7 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: context.read<MenuController>().scaffoldKey,
+      // key: context.read<MenuController>().scaffoldKey,
       drawer: SideMenu(),
       body: SafeArea(
         child: Row(

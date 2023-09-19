@@ -7,7 +7,7 @@ import 'package:odm_ui/tabs/shoppingcart_tab.dart';
 import 'package:odm_ui/widgets/bottom_tabs.dart';
 
 import 'side_menu.dart';
-import 'package:odm_ui/controllers/menu_controller.dart';
+// import 'package:odm_ui/controllers/menu_controller.dart';
 import 'package:odm_ui/constants.dart';
 import 'package:odm_ui/responsive.dart';
 
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: context.read<MenuController>().scaffoldKey,
+      // key: context.read<MenuController>().scaffoldKey,
       drawer: SideMenu(),
       body: SafeArea(
         child: Row(

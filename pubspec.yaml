@@ -1,5 +1,5 @@
 name: odm_ui
-description: OnDaMenu interface for mobile UI and POS UI
+description: OnDaMenu Merchant POS Service
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -10,8 +10,8 @@ version: 1.0.0+1
 environment:
   # original: sdk: ">=2.7.0 <3.0.0"
   # latest:
-  sdk: ">=2.12.0 <3.3.2"
-
+  sdk: ">=3.1.2 <4.0.0"
+  # sdk: ">=2.12.0 <3.0.0"
 
 
 dependencies:
@@ -27,33 +27,33 @@ dependencies:
   # firebase dependencies
   # origingl: firebase_core: "0.7.0"
   # latest:
-  firebase_core: "^1.10.2"
+  firebase_core: ^2.15.1
   # base git: firebase_core: "0.5.0"
 
   # original: firebase_auth: "^1.1.0"
   # latest:
-  firebase_auth: ^3.10.0
-  firebase_auth_web: ^4.5.0
+  firebase_auth: ^4.9.0
+  firebase_auth_web: ^5.8.0
 
-  http: ^0.13.4
+  http: ^1.1.0
   http_parser: ^4.0.0
   # base git: firebase_auth: "^0.18.0+1"
 
   # google fonts
   # original: google_fonts: ^1.1.2
   # base git:
-  google_fonts: ^3.0.1
+  google_fonts: ^6.0.0
 
   # flutter_svg:
-  flutter_svg: ^1.1.5
-  fl_chart: ^0.55.1
+  flutter_svg: ^2.0.7
+  fl_chart: ^0.63.0
   provider: ^6.0.3
 
   # cloud firestore_ui:
   # base git: cloud_firestore: "^0.14.0+2"
   # cloud_firestore: "^0.14.1"
   # latest:
-  cloud_firestore: ^3.1.5
+  cloud_firestore: ^4.9.1
 
   # BLoC Data Seperation
   flutter_bloc: ^8.0.0
@@ -71,7 +71,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  ### flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -86,5 +86,4 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/icons/
 

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odm_ui/screens/service_products_page.dart';
@@ -250,6 +252,11 @@ class _SelectedServicePageState extends State<SelectedServicePage> {
 
                 }
             ),
+            /*ActionBar(
+              hasBackArrow: true,
+              hasTitle: false,
+              hasBackground: false,
+            )*/
           ],
         )
     );
